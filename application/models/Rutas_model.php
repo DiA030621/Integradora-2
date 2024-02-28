@@ -94,12 +94,22 @@ class Rutas_model extends CI_Model
     }
 
 
-    public function get_vehiculo()
+    public function get_vehiculos()
     //obtiene todos los registros de vehiculos
     {
         $rs=$this->db
         ->select("*")
         ->from("vehiculo")
+        ->get();
+        return $rs->num_rows() > 0 ? $rs-> result() : null;
+    }
+    public function get_vehiculo($clave)
+    //obtiene registro de vehiculos segun su clave
+    {
+        $rs=$this->db
+        ->select("*")
+        ->from("vehiculo")
+        ->where("clave", $clave)
         ->get();
         return $rs->num_rows() > 0 ? $rs-> result() : null;
     }
