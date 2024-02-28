@@ -53,5 +53,27 @@ class Usuarios_model extends CI_Model
         $rs=$this->db->affected_rows();
         return $rs >0;
     }
+
+
+    public function get_sesion($correo, $contra)
+    //obtiene el registro de un usuario con correo y contraseña
+    {
+        $rs=$this->db
+        ->select("*")
+        ->from("usuario")
+        ->where('correo', $correo)
+        ->where('contra', $contra)
+        ->get();
+        return $rs->num_rows() > 0 ? $rs-> result() : null;
+    }
+    
+
+    public function insert_usuario_parada($data)
+    //ingresa la parada donde el usuario se baja
+    {
+        $this->db->insert('usuario_parada', $data);
+        $rs=$this->db->affected_rows();
+        return $rs > 0;
+    }
 }
 ?>
