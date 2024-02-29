@@ -1,7 +1,7 @@
 <?php
 class Rutas_model extends CI_Model
 {
-    public function get_ruta()
+    public function get_rutas()
     //obtiene todos los registros de rutas
     {
         $rs=$this->db
@@ -13,16 +13,17 @@ class Rutas_model extends CI_Model
 
 
     public function get_tramo($clave_ruta)
-    /*obtiene clave de ruta,
-     clave de paradas y las coordenadas de las paradas
+    /*obtiene clave de ruta,clave de paradas
+    y las coordenadas de las paradas
     de una ruta seleccionada*/
     {
         $rs=$this->db
         ->select("t.*, latitud, longitud")
         ->from("paradas p")
-        ->join('tramos t', 't.clave_parada=p.clave')
-        ->where('clave_ruta', $clave_ruta)
+        ->join('tramos t', 't.clave_paradas=p.clave')
+        ->where('t.clave_ruta', $clave_ruta)
         ->get();
+        //die($this->db->last_query());
         return $rs-> num_rows() > 0 ? $rs->result() : null;
     }
 
@@ -76,6 +77,7 @@ class Rutas_model extends CI_Model
         $this->db
         ->where('clave', $clave)
         ->delete("ruta");
+        //die($this->db->last_query());
         $rs=$this->db->affected_rows();
         return $rs >0;
     }
@@ -87,7 +89,7 @@ class Rutas_model extends CI_Model
     {
         $this->db
         ->where('clave_ruta', $data['clave_ruta'])
-        ->where('clave_paradas', $data['clave_paradas'])
+        ->where('clave_parada', $data['clave_parada'])
         ->delete("tramos");
         $rs=$this->db->affected_rows();
         return $rs >0;

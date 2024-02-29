@@ -7,8 +7,11 @@ class Usuarios_model extends CI_Model
         $rs=$this->db
         ->select("*")
         ->from("usuario")
+        ->where('tipo', 'clien')
         ->get();
+        //die($this->db->last_query());
         return $rs->num_rows() > 0 ? $rs-> result() : null;
+        
     }
 
 
@@ -59,7 +62,7 @@ class Usuarios_model extends CI_Model
     //obtiene el registro de un usuario con correo y contraseña
     {
         $rs=$this->db
-        ->select("*")
+        ->select("tipo")
         ->from("usuario")
         ->where('correo', $correo)
         ->where('contra', $contra)
