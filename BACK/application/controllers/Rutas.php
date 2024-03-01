@@ -100,6 +100,125 @@ class Rutas extends CI_Controller
     }
 
 
+    public function get_vehiculos()
+    //obtiene el registro de todos los vehiculos
+    {
+        $r=$this->rutas_model->get_vehiculos();
+        echo json_encode($r);
+    }
+
+
+    public function get_vehiculo()
+    //obtiene el registro de un vehiculo segun su clave
+    //para realizar cambios
+    {
+        $clave=$this->input->post('clave');
+        $r=$this->rutas_model->get_vehiculo($clave);
+        echo json_encode($r);
+    }
+
+
+    public function insert_vehiculo()
+    //ingresa los datos de un nuevo vehiculo
+    /*
+    !!!IMPORTANTE!!!  ESTADO SOLO PUEDE SER:
+    "activo" o "mantenimiento"
+    */
+    {
+        $marca=$this->input->post('marca');
+        $modelo=$this->input->post('modelo');
+        $placa=$this->input->post('placa');
+        $estado=$this->input->post('estado');//activo o mantenimiento
+        $data=array(
+            'marca'=>$marca,
+            'modelo'=>$modelo,
+            'placa'=>$placa,
+            'estado'=>$estado
+        );
+        $r=$this->rutas_model->insert_vehiculo($data);
+        echo json_encode($r);
+    }
+
+
+    public function update_vehiculo()
+    //actualiza los dato de un nuevo vehiculo segun su clave
+    //la clave no se debe actualizar
+    /*
+    !!!IMPORTANTE!!!  ESTADO SOLO PUEDE SER:
+    -------"activo" o "mantenimiento"------
+    */
+    {
+        $clave=$this->input->post('clave');
+        $marca=$this->input->post('marca');
+        $modelo=$this->input->post('modelo');
+        $placa=$this->input->post('placa');
+        $estado=$this->input->post('estado');//activo o mantenimiento
+        $data=array(
+            'clave'=>$clave,
+            'marca'=>$marca,
+            'modelo'=>$modelo,
+            'placa'=>$placa,
+            'estado'=>$estado
+        );
+        $r=$this->rutas_model->update_vehiculo($data);
+        echo json_encode($r);
+    }
+
+
+    public function delete_vehiculo()
+    //elimina un registro de cehiculo segun su clave
+    {
+        $clave=$this->input->post('clave');
+        $r=$this->rutas_model->delete_vehiculo($clave);
+        echo json_encode($r);
+    }
+
+
+    public function get_paradas()
+    //obtiene todos los registros de paradas(con coordenadas)
+    {
+        $r=$this->rutas_model->get_paradas();
+        echo json_encode($r);
+    }
+
+
+    public function insert_parada()
+    //ingresa un nuevo registro a una parada
+    {
+        $nombre=$this->input->post('nombre');
+        $latitud=$this->input->post('latitud');
+        $longitud=$this->input->post('longitud');
+        $data=array(
+            'nombre'=>$nombre,
+            'latitud'=>$latitud,
+            'longitud'=>$longitud
+        );
+        $r=$this->rutas_model->insert_parada($data);
+        echo json_encode($r);
+    }
+
+    
+    public function update_parada()
+    //esto solo actualiza el nombre de la parada
+    //no se deben de actualizar coordenadas
+    {
+        $clave=$this->input->post('clave');
+        $nombre=$this->input->post('nombre');
+        $data=array(
+            'nombre'=>$nombre
+        );
+        $r=$this->rutas_model->update_parada($clave,$data);
+        echo json_encode($r);
+    }
+
+
+    public function delete_parada()
+    //elimina el registro de una parada
+    {
+        $clave=$this->input->post('clave');
+        $r=$this->rutas_model->delete_parada($clave);
+        echo json_encode($r);
+    }
 
 }
 ?>

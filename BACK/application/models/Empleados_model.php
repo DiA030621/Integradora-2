@@ -36,11 +36,11 @@ class Empleados_model extends CI_Model
         return $rs > 0;
     }
 
-    public function update_empleado($data)
+    public function update_empleado($clave,$data)
     //actualiza los datos de un chofer
     {
         $this->db
-        ->where('clave', $data['clave'])
+        ->where('clave', $clave)
         ->update("chofer", $data);
         $rs=$this->db->affected_rows();
         return $rs > 0;
@@ -73,6 +73,17 @@ class Empleados_model extends CI_Model
         $this->db
         ->where('clave_chofer', $data['clave_chofer'])
         ->update("audita_chof", $data);
+        $rs=$this->db->affected_rows();
+        return $rs > 0;
+    }
+
+
+    public function delete_chofer_vehiculo($clave_chofer)
+    //elimina un registro de vehiculo chofer, segun la clave de chofer
+    {
+        $this->db
+        ->where('clave_chofer', $clave_chofer)
+        ->delete("audita_chof");
         $rs=$this->db->affected_rows();
         return $rs > 0;
     }

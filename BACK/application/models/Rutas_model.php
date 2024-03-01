@@ -105,6 +105,8 @@ class Rutas_model extends CI_Model
         ->get();
         return $rs->num_rows() > 0 ? $rs-> result() : null;
     }
+
+
     public function get_vehiculo($clave)
     //obtiene registro de vehiculos segun su clave
     {
@@ -142,13 +144,13 @@ class Rutas_model extends CI_Model
     {
         $this->db
         ->where('clave', $clave)
-        ->delete("tramos");
+        ->delete("vehiculo");
         $rs=$this->db->affected_rows();
         return $rs >0;
     }
 
 
-    public function get_parada()
+    public function get_paradas()
     //obtiene todos los registros de paradas
     {
         $rs=$this->db
@@ -168,12 +170,12 @@ class Rutas_model extends CI_Model
     }
 
 
-    public function update_parada($data)
+    public function update_parada($clave,$data)
     /*actualiza los datos de una parada,
      en este caso solo deberia ser su nombre */
     {
         $this->db
-        ->where('clave', $data['clave'])
+        ->where('clave', $clave)
         ->update("paradas", $data);
         $rs=$this->db->affected_rows();
         return $rs > 0;
