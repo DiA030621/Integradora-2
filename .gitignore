@@ -1,0 +1,4 @@
+# Ignorar archivos de configuración de CodeIgniter
+BACK/.htaccess
+BACK/application/config/config.php
+BACK/application/config/database.php
