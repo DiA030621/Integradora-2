@@ -1,11 +1,26 @@
-import React from 'react';
-import LoginForm from './LoginForm';
-import { BrowserRouter } from 'react-router-dom';
+import React, { useState } from 'react';
+import LoginForm from './Vistas/LoginForm';
+import Home from "./Vistas/Home";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
     <div className="App">
-      <LoginForm />
+      {isLoggedIn ? (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </BrowserRouter>
+      ) : (
+        <LoginForm onLogin={handleLogin} />
+      )}
     </div>
   );
 }

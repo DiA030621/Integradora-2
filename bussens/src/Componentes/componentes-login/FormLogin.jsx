@@ -26,12 +26,20 @@ function FormLogin (props)
             });
 
             const data = await response.json();
-            console.log('Mensaje de respuesta:', data[0].tipo);
+            console.log('Mensaje de respuesta:', data.usuario[0]);
+            if (!data.resultado) {
+                setError(data.mensaje);
+                return;
+            }else
+            {
+                props.onLogin(data);
+            }
+    
         } catch (error) 
         {
             console.error('Error al realizar la solicitud:', error);
         }
-
+        
         setUsername('');
         setPassword('');
         setError('');

@@ -18,7 +18,13 @@ class Usuarios extends CI_Controller
         $correo=$this->input->post('correo');
         $contra=$this->input->post('contra');
         $r=$this->usuarios_model->get_sesion($correo,$contra);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." usuario recuperado" : "El correo o contraseña no coinciden";
+        $obj["usuario"] = $r;
+        
+
+        echo json_encode($obj);
     }
 
 
