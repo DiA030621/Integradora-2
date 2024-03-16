@@ -6,6 +6,7 @@ class Empleados extends CI_Controller
         parent::__construct();
         $this->load->model("empleados_model");
         header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Headers: Content-Type');
     }
 
 
@@ -14,7 +15,12 @@ class Empleados extends CI_Controller
     de los empleados y su vehiculo asignado*/
     {
         $r=$this->empleados_model->get_empleados();
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." empleados recuperados" : "No se encontraron empleados";
+        $obj["empleados"] = $r;
+
+        echo json_encode($obj);
     }
 
 
@@ -24,7 +30,12 @@ class Empleados extends CI_Controller
     {
         $clave=$this->input->post('clave');
         $r=$this->empleados_model->get_empleado($clave);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." usuarios recuperados" : "No se encontraron usuarios";
+        $obj["usuarios"] = $r;
+
+        echo json_encode($obj);
     }
 
 
@@ -40,7 +51,12 @@ class Empleados extends CI_Controller
             'am'=>$am
         );
         $r=$this->empleados_model->insert_empleado($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $r["resultado"] ?
+            "Se insertaron datos correctamente" : 
+            "No se insertaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -57,7 +73,12 @@ class Empleados extends CI_Controller
             'am'=>$am
         );
         $r=$this->empleados_model->update_empleado($clave,$data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se insertarom datos correctamente" : 
+            "No se insertaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -66,7 +87,12 @@ class Empleados extends CI_Controller
     {
         $clave=$this->input->post('clave');
         $r=$this->empleados_model->delete_empleado($clave);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se eliminaron datos correctamente" : 
+            "No se eliminaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -80,7 +106,12 @@ class Empleados extends CI_Controller
             'clave_vehiculo'=>$clave_vehiculo
         );
         $r=$this->empleados_model->insert_chofer_vehiculo($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r !== NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se insertaron datos correctamente" : 
+            "No se insertaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -94,14 +125,26 @@ class Empleados extends CI_Controller
             'clave_vehiculo'=>$clave_vehiculo_nuevo
         );
         $r=$this->empleados_model->update_chofer_vehiculo($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se actualizaron los datos correctamente" : 
+            "No se actualizaron los datos";
+
+        echo json_encode($obj);
     }
+
+
     public function delete_chofer_vehiculo()
     //se asigna un vehiculo diferente a un chofer usando la clave del chofer
     {
         $clave_chofer=$this->input->post('clave_chofer');
         $r=$this->empleados_model->delete_chofer_vehiculo($clave_chofer);
-        echo json_encode($r);
+        $obj["resultado"] = $r !== NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se eliminaron datos correctamente" : 
+            "No se eliminaron los datos";
+
+        echo json_encode($obj);
     }
 }
 ?>

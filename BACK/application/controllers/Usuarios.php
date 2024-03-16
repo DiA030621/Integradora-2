@@ -18,7 +18,11 @@ class Usuarios extends CI_Controller
         $correo=$this->input->post('correo');
         $contra=$this->input->post('contra');
         $r=$this->usuarios_model->get_sesion($correo,$contra);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." usuario encontrado" : "Correo o contraseña incorrecta";
+        $obj["usuarios"] = $r;
+        echo json_encode($obj);
     }
 
 
@@ -26,7 +30,12 @@ class Usuarios extends CI_Controller
     //cotrolador que obtiene todos los registros de usuarios tipo cliente para su administración
     {
         $r=$this->usuarios_model->get_usuarios();
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." usuarios recuperados" : "No se encontraron usuarios";
+        $obj["usuarios"] = $r;
+
+        echo json_encode($obj);
     }
 
 
@@ -36,7 +45,11 @@ class Usuarios extends CI_Controller
     {
         $clave=$this->input->post('clave');
         $r=$this->usuarios_model->get_usuario($clave);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." usuario recuperados" : "No se encontraron usuarios";
+        $obj["usuarios"] = $r;
+        echo json_encode($obj);
     }
 
 
@@ -56,7 +69,12 @@ class Usuarios extends CI_Controller
             'contra'=>$contra
         );
         $r=$this->usuarios_model->insert_usuario($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se insertaron datos correctamente" : 
+            "No se insertaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -84,7 +102,12 @@ class Usuarios extends CI_Controller
             'saldo'=>$saldo
         );
         $r=$this->usuarios_model->update_usuario($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se actualizaron datos correctamente" : 
+            "No se actualizaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -93,7 +116,12 @@ class Usuarios extends CI_Controller
     {
         $clave=$this->input->post('clave');
         $r=$this->usuarios_model->delete_usuario($clave);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se eliminaron los datos correctamente" : 
+            "No se eliminaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -107,7 +135,27 @@ class Usuarios extends CI_Controller
             'clave_tramo'=>$clave_tramo
         );
         $r=$this->usuarios_model->insert_usuario_parada($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se insertaron datos correctamente" : 
+            "No se insertaron los datos";
+
+        echo json_encode($obj);
     }
+
+
+    public function delete_usuario_parada()
+    //elumina una parada en donde el usuario se baja
+    {
+        $clave=$this->input->post('clave');
+        $r=$this->usuarios_model->delete_usuario_parada($clave);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se eliminaron datos correctamente" : 
+            "No se eliminaron los datos";
+
+        echo json_encode($obj);
+    }
+
 }
 ?>
