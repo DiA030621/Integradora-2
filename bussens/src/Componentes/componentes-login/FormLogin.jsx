@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function FormLogin (props)
 {
@@ -37,7 +37,7 @@ function FormLogin (props)
             }else 
             {
                 const { tipo } = data.usuario[0];
-                if(tipo!="Admin")
+                if(tipo!=="Admin")
                 {
                     setError("Tienes prohibido el acceso");
                     setUsername('');

@@ -6,7 +6,7 @@ const LoginForm = (props) => {
         const Login = data => 
         {
             const { tipo } = data.usuario[0];
-            if(tipo=='Admin')
+            if(tipo==='Admin')
             {
                 props.onLogin();
             }else{
