@@ -21,7 +21,12 @@ class Rutas extends CI_Controller
     los registros de rutas*/
     {
         $r=$this->rutas_model->get_rutas();
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." rutas recuperadas" : "No se encontraron rutas";
+        $obj["rutas"] = $r;
+
+        echo json_encode($obj);
     }
     
 
@@ -31,7 +36,12 @@ class Rutas extends CI_Controller
     {
         $clave_ruta=$this->input->post('clave_ruta');
         $r=$this->rutas_model->get_tramo($clave_ruta);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." tramos recuperados" : "No se encontraron tramos";
+        $obj["tramos"] = $r;
+
+        echo json_encode($obj);
     }
 
     public function insert_ruta()
@@ -43,7 +53,12 @@ class Rutas extends CI_Controller
             'nombre'=>$nombre
         );
         $r=$this->rutas_model->insert_ruta($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se insertaron datos correctamente" : 
+            "No se insertaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -57,7 +72,12 @@ class Rutas extends CI_Controller
             'clave_parada'=>$clave_parada
         );
         $r=$this->rutas_model->insert_tramo($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se insertaron datos correctamente" : 
+            "No se insertaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -72,7 +92,12 @@ class Rutas extends CI_Controller
             'nombre'=>$nombre
         );
         $r=$this->rutas_model->update_ruta($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se actualizaron los datos correctamente" : 
+            "No se actualizaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -81,7 +106,12 @@ class Rutas extends CI_Controller
     {
         $clave=$this->input->post('clave');
         $r=$this->rutas_model->delete_ruta($clave);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se eliminaron datos correctamente" : 
+            "No se actualizaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -96,7 +126,12 @@ class Rutas extends CI_Controller
             'clave_parada'=>$clave_parada
         );
         $r=$this->rutas_model->delete_tramo($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se eliminaron datos correctamente" : 
+            "No se eliminaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -104,7 +139,12 @@ class Rutas extends CI_Controller
     //obtiene el registro de todos los vehiculos
     {
         $r=$this->rutas_model->get_vehiculos();
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." vehiculos recuperados" : "No se encontraron vehiculos";
+        $obj["vehiculos"] = $r;
+
+        echo json_encode($obj);
     }
 
 
@@ -114,7 +154,12 @@ class Rutas extends CI_Controller
     {
         $clave=$this->input->post('clave');
         $r=$this->rutas_model->get_vehiculo($clave);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." vehiculos recuperados" : "No se encontraron vehiculos";
+        $obj["vehiculos"] = $r;
+
+        echo json_encode($obj);
     }
 
 
@@ -136,7 +181,12 @@ class Rutas extends CI_Controller
             'estado'=>$estado
         );
         $r=$this->rutas_model->insert_vehiculo($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se insertaron datos correctamente" : 
+            "No se insertaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -161,7 +211,12 @@ class Rutas extends CI_Controller
             'estado'=>$estado
         );
         $r=$this->rutas_model->update_vehiculo($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se actualizaron datos correctamente" : 
+            "No se actualizaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -170,7 +225,12 @@ class Rutas extends CI_Controller
     {
         $clave=$this->input->post('clave');
         $r=$this->rutas_model->delete_vehiculo($clave);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se eliminaron datos correctamente" : 
+            "No se eliminaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -178,7 +238,12 @@ class Rutas extends CI_Controller
     //obtiene todos los registros de paradas(con coordenadas)
     {
         $r=$this->rutas_model->get_paradas();
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." paradas recuperados" : "No se encontraron paradas";
+        $obj["paradas"] = $r;
+
+        echo json_encode($obj);
     }
 
 
@@ -194,7 +259,12 @@ class Rutas extends CI_Controller
             'longitud'=>$longitud
         );
         $r=$this->rutas_model->insert_parada($data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se insertaron los datos correctamente" : 
+            "No se insertaron los datos";
+
+        echo json_encode($obj);
     }
 
     
@@ -208,7 +278,12 @@ class Rutas extends CI_Controller
             'nombre'=>$nombre
         );
         $r=$this->rutas_model->update_parada($clave,$data);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se actualizarno datos correctamente" : 
+            "No se actualizaron los datos";
+
+        echo json_encode($obj);
     }
 
 
@@ -217,7 +292,12 @@ class Rutas extends CI_Controller
     {
         $clave=$this->input->post('clave');
         $r=$this->rutas_model->delete_parada($clave);
-        echo json_encode($r);
+        $obj["resultado"] = $r != NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se eliminaron datos correctamente" : 
+            "No se eliminaron los datos";
+
+        echo json_encode($obj);
     }
 
 }

@@ -20,7 +20,7 @@ class Rutas_model extends CI_Model
         $rs=$this->db
         ->select("t.*, latitud, longitud")
         ->from("paradas p")
-        ->join('tramos t', 't.clave_paradas=p.clave')
+        ->join('tramos t', 't.clave_parada=p.clave')
         ->where('t.clave_ruta', $clave_ruta)
         ->get();
         //die($this->db->last_query());

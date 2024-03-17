@@ -16,7 +16,12 @@ class Pago extends CI_Controller
         $clave=$this->input->post('clave');
         $monto=$this->input->post('monto');
         $r=$this->pago_model->insert_prepago($clave,$monto);
-        echo json_encode($r);
+        $obj["resultado"] = $r !== NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se realizo el pago correctamente" : 
+            "No se ralizo el pago";
+
+        echo json_encode($obj);
         /*$obj["mensaje"] = $r==null ?
             "Se realizo correctamente la venta" : 
             "No se realizo la venta correctamente";
@@ -43,7 +48,12 @@ class Pago extends CI_Controller
         $clave_usu=$this->input->post('clave_usu');
         $clave_vehi=$this->input->post('clave_vehi');
         $r=$this->pago_model->insert_pago($clave_usu, $clave_vehi);
-        echo json_encode($r);
+        $obj["resultado"] = $r !== NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
+            "Se realizo el pago correctamente" : 
+            "No se realizo el pago";
+
+        echo json_encode($obj);
     }
 }
 ?>

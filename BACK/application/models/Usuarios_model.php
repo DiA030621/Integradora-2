@@ -78,5 +78,15 @@ class Usuarios_model extends CI_Model
         $rs=$this->db->affected_rows();
         return $rs > 0;
     }
+
+    public function delete_usuario_parada($clave)
+    //elimina un registro de una parada donde el usuario se baja
+    {
+        $this->db
+        ->where('clave', $clave)
+        ->delete("usuario_parada");
+        $rs=$this->db->affected_rows();
+        return $rs >0;
+    }
 }
 ?>
