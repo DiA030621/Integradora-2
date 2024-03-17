@@ -26,13 +26,27 @@ function FormLogin (props)
             });
 
             const data = await response.json();
-            console.log('Mensaje de respuesta:', data.usuario[0]);
+            //console.log('Mensaje de respuesta:', data.usuario[0]);
+            
+            //console.log('Mensaje de respuesta:', tipo);
             if (!data.resultado) {
                 setError(data.mensaje);
+                setUsername('');
+                setPassword('');
                 return;
-            }else
+            }else 
             {
-                props.onLogin(data);
+                const { tipo } = data.usuario[0];
+                if(tipo!="Admin")
+                {
+                    setError("Tienes prohibido el acceso");
+                    setUsername('');
+                    setPassword('');
+                    return;
+                }else
+                {
+                    props.onLogin(data);
+                }
             }
     
         } catch (error) 
