@@ -6,6 +6,7 @@ class Pago extends CI_Controller
         parent::__construct();
         $this->load->model("pago_model");
         header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Headers: Content-Type');
     }
 
 

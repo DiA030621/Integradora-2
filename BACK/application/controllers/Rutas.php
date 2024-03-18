@@ -6,6 +6,7 @@ class Rutas extends CI_Controller
         parent::__construct();
         $this->load->model("rutas_model");
         header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Headers: Content-Type');
     }
 
 
@@ -299,6 +300,22 @@ class Rutas extends CI_Controller
 
         echo json_encode($obj);
     }
+
+
+    public function get_parada_tramo()
+    /*controlador que obtiene el registro 
+    de una ruta y sus paradas con coordenadas*/
+    {
+        $clave=$this->input->post('clave_ruta');
+        $r=$this->rutas_model->get_parada_tramo($clave);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." paradas recuperadas" : "No se encontraron paradas";
+        $obj["paradas"] = $r;
+
+        echo json_encode($obj);
+    }
+
 
 }
 ?>

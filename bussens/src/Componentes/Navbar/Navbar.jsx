@@ -7,6 +7,7 @@ import {
   NavBtnLink
 } from './NavbarElements';
 import { AiFillHome } from "react-icons/ai";
+import { GrWaypoint } from "react-icons/gr";
 
 const Navbar = (props) => {
     const [isopen, setIsOpen] = useState(false);
@@ -27,6 +28,8 @@ const Navbar = (props) => {
         <Bars onClick={toggleMenu} />
         <NavMenu isopen={isopen}>
           <NavLink to='/home'><AiFillHome /> Home
+          </NavLink>
+          <NavLink to='/rutas'><GrWaypoint /> Rutas
           </NavLink>
           <NavBtnLink onClick={logOut}>Cerrar sesión</NavBtnLink>
         </NavMenu>

@@ -1,0 +1,57 @@
+.cont-principal {
+    width: 100%;
+    max-width: 1070px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+  }
+  
+  .cont-clave,
+  .cont-nombre {
+    flex: 1;
+  }
+
+ .cont-nombre{
+    background-color: #f2cd00;
+ }
+  
+  .btn-editar,
+  .btn-borrar {
+    border-radius: 20px;
+    padding: 5px 10px;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+  }
+
+  .btn-editar {
+  background-color: #BCE28F; /* Color de fondo para el botón de editar */
+  color: #000; /* Color del texto dentro del botón */
+}
+
+.btn-borrar {
+  background-color: #FF4B40; /* Color de fondo para el botón de borrar */
+  color: #000; /* Color del texto dentro del botón */
+}
+  
+  .btn-editar:hover,
+  .btn-borrar:hover {
+    background-color: lightblue;
+  }
+  
+  @media (max-width: 768px) {
+    .cont-principal {
+      flex-direction: column;
+    }
+  
+    .btn-editar,
+    .btn-borrar {
+      margin-top: 10px;
+      margin-left: 0;
+    }
+  }

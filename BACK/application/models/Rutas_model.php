@@ -191,6 +191,23 @@ class Rutas_model extends CI_Model
         $rs=$this->db->affected_rows();
         return $rs >0;
     }
+    
+
+    public function get_parada_tramo($clave)
+    //elimina una parada usando su clave
+    {
+        $subquery = $this->db->select('clave_parada')
+            ->from('tramos')
+            ->where('clave_ruta', $clave)
+            ->get_compiled_select();
+            
+        $rs=$this->db->select('*')
+            ->from('paradas')
+            ->where("clave NOT IN ($subquery)", null, false)
+            ->get();
+        
+        return $rs->num_rows() > 0 ? $rs-> result() : null;
+    }
 
 }
 ?>
