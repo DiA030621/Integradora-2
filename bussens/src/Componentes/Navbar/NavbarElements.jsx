@@ -24,7 +24,7 @@ export const NavLink = styled(Link)`
   cursor: pointer;
 
   &.active {
-    color: #15cdfc;
+    color: #f2cd00;
   }
 `;
 
@@ -74,9 +74,9 @@ export const NavBtn = styled.nav`
 
 export const NavBtnLink = styled(Link)`
   border-radius: 4px;
-  background: #256ce1;
+  background: #f2cd00;
   padding: 10px 22px;
-  color: #fff;
+  color: #000;
   outline: none;
   border: none;
   cursor: pointer;
@@ -88,7 +88,7 @@ export const NavBtnLink = styled(Link)`
 
   &:hover {
     transition: all 0.2s ease-in-out;
-    background: #fff;
-    color: #010606;
+    background: #000;
+    color: #f2cd00;
   }
 `;

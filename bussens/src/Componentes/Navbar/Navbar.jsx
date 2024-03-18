@@ -16,7 +16,6 @@ const Navbar = (props) => {
     };
 
     const logOut = () => {
-      localStorage.removeItem('token');
       props.onLogout();
     };
 
@@ -29,9 +28,6 @@ const Navbar = (props) => {
         <NavMenu isopen={isopen}>
           <NavLink to='/home'><AiFillHome /> Home
           </NavLink>
-          <NavLink to='/about'>About</NavLink>
-          <NavLink to='/services'>Services</NavLink>
-          <NavLink to='/contact'>Contact</NavLink>
           <NavBtnLink onClick={logOut}>Cerrar sesión</NavBtnLink>
         </NavMenu>
       </Nav>

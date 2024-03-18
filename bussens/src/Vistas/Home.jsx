@@ -1,10 +1,13 @@
 import React from "react";
+import Bienvenida from "../Componentes/componentes-home/Bienvenida";
 
-function Home ()
+export function Home ()
 {
     return(
-        <h1>Hola</h1>
+        <div>
+            <Bienvenida 
+            nombre="hola juan"
+            testimonio="como haz estado?"/>
+        </div>
     )
 }
-
-export default Home;

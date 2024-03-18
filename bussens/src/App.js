@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import LoginForm from './Vistas/LoginForm';
-import Home from "./Vistas/Home";
+import {Home} from './Vistas/Home';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './Componentes/Navbar/Navbar';
+import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,16 +24,17 @@ function App() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('token');
     setIsLoggedIn(false);
   };
 
   return (
     <div className="App">
       {isLoggedIn ? (
-        <BrowserRouter onLogout={handleLogout}>
-        <Navbar />
+        <BrowserRouter>
+        <Navbar  onLogout={handleLogout} />
           <Routes>
-            <Route path='/home' exact component={Home} />
+            <Route path="/home" element={<Home />} />
           </Routes>
         </BrowserRouter>
       ) : (
