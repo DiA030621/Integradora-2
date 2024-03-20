@@ -6,6 +6,18 @@ import '../../Estilos-vistas/Ruta_form.css';
 
 const Map = (clave_ruta) => {
 
+  const [selectedMarkerA, setSelectedMarkerA] = useState(null);
+  const [selectedMarkerE, setSelectedMarkerE] = useState(null);
+
+  const handleMarkerClickA = (marker) => {
+    setSelectedMarkerA(marker);
+    setSelectedMarkerE(null);
+  };
+  const handleMarkerClickE = (marker) => {
+    setSelectedMarkerE(marker);
+    setSelectedMarkerA(null);
+  };
+
   const [mapLoaded, setMapLoaded]=useState(false);
     
   const mapContainerStyle = {
@@ -53,6 +65,38 @@ const Map = (clave_ruta) => {
   };
   document.body.appendChild(script);
         }, []);
+
+        const ClickEliminar = () => 
+        {
+          const form = new FormData();
+          form.append('clave_ruta', clave_ruta.clave_ruta);
+          form.append('clave_parada', selectedMarkerE.clave_parada);
+          fetch('http://localhost/Integradora-2/BACK/rutas/delete_tramo', {
+          method: 'POST',
+          body: form
+          }).then(response => response.json())
+          .then(data => {
+              console.log(data);
+          })
+          .catch(error => console.log(error));
+          window.location.reload();
+        }
+        const ClickAgregar = () => 
+        {
+          const form = new FormData();
+          form.append('clave_ruta', clave_ruta.clave_ruta);
+          form.append('clave_parada', selectedMarkerA.clave);
+          fetch('http://localhost/Integradora-2/BACK/rutas/insert_tramo', {
+          method: 'POST',
+          body: form
+          }).then(response => response.json())
+          .then(data => {
+              console.log(data);
+          })
+          .catch(error => console.log(error));
+          window.location.reload();
+        }
+
     return (
       <div className='container_ruta'>
         <div className='mapa_ruta'>
@@ -72,6 +116,7 @@ const Map = (clave_ruta) => {
                     url: camion, // Utilizar la imagen del marcador personalizado
                     scaledSize: new window.google.maps.Size(20, 20), // Tamaño personalizado del marcador
                   }}
+                  onClick={() => handleMarkerClickA(parada)}
                 />
               ))}
 
@@ -84,6 +129,7 @@ const Map = (clave_ruta) => {
                     url: parada, // Utilizar la imagen del marcador personalizado
                     scaledSize: new window.google.maps.Size(20, 20), // Tamaño personalizado del marcador
                   }}
+                  onClick={() => handleMarkerClickE(tramo)}
                 />
               ))}
               {/* Mapea los marcadores de los tramos en el mapa */}
@@ -93,10 +139,24 @@ const Map = (clave_ruta) => {
         </div>
         <div className="formulario_ruta">
           <h2>Información del marcador</h2>
-          <p>Clave: {/*selectedMarker.clave*/}</p>
-          <p>Latitud: {/*selectedMarker.latitud*/}</p>
-          <p>Longitud: {/*selectedMarker.longitud*/}</p>
+          {selectedMarkerA && (
+            <>
+          <p>nombre: {selectedMarkerA.nombre}</p>
+          <p>Latitud: {selectedMarkerA.latitud}</p>
+          <p>Longitud: {selectedMarkerA.longitud}</p>
+          <button onClick={ClickAgregar}>Agregar</button>
           {/* Agrega otros campos del formulario según tus necesidades */}
+          </>
+          )}
+          {selectedMarkerE && (
+            <>
+          <p>clave: {selectedMarkerE.clave}</p>
+          <p>Latitud: {selectedMarkerE.latitud}</p>
+          <p>Longitud: {selectedMarkerE.longitud}</p>
+          <button onClick={ClickEliminar}>Eliminar</button>
+          {/* Agrega otros campos del formulario según tus necesidades */}
+          </>
+          )}
         </div>
     </div>
   );
