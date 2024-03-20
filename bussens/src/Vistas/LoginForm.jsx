@@ -17,8 +17,8 @@ const LoginForm = (props) => {
     
 
     return (
-        <div className="background">
-            <div className="container">
+        <div className="backgroundd">
+            <div className="containerr">
                 <FormLogin onLogin={Login}/>
             </div>
         </div>

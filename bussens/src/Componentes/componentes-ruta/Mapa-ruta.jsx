@@ -54,8 +54,8 @@ const Map = (clave_ruta) => {
   document.body.appendChild(script);
         }, []);
     return (
-      <div className='container'>
-        <div className='mapa' style={{ flex: '0 0 65%' }}>
+      <div className='container_ruta'>
+        <div className='mapa_ruta'>
             {mapLoaded && (
             <GoogleMap
               mapContainerStyle={{ ...mapContainerStyle, flex: '1' }}
@@ -91,7 +91,7 @@ const Map = (clave_ruta) => {
             </GoogleMap>
             )}
         </div>
-        <div className="formulario" style={{ flex: '0 0 35%' }}>
+        <div className="formulario_ruta">
           <h2>Información del marcador</h2>
           <p>Clave: {/*selectedMarker.clave*/}</p>
           <p>Latitud: {/*selectedMarker.latitud*/}</p>

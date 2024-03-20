@@ -6,8 +6,8 @@ export function Home ()
     return(
         <div>
             <Bienvenida 
-            nombre="hola juan"
-            testimonio="como haz estado?"/>
+            nombre="Bienvenido"
+            testimonio="Este es el panel de control Bussen"/>
         </div>
     )
 }
