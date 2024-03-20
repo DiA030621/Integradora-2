@@ -11,7 +11,7 @@ const Rutas_paradas = () => {
     return (
       <div>
           <Titulo
-          text={clave}/>
+          text={'Gestion de ruta '+ clave}/>
           <Map
           clave_ruta={clave}/>
 
