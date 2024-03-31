@@ -8,6 +8,7 @@ import {
 } from './NavbarElements';
 import { AiFillHome } from "react-icons/ai";
 import { GrWaypoint } from "react-icons/gr";
+import { FaBusSimple } from "react-icons/fa6";
 
 const Navbar = (props) => {
     const [isopen, setIsOpen] = useState(false);
@@ -30,6 +31,8 @@ const Navbar = (props) => {
           <NavLink to='/home'><AiFillHome /> Home
           </NavLink>
           <NavLink to='/rutas'><GrWaypoint /> Rutas
+          </NavLink>
+          <NavLink to='/paradas'><FaBusSimple /> Paradas
           </NavLink>
           <NavBtnLink onClick={logOut}>Cerrar sesión</NavBtnLink>
         </NavMenu>

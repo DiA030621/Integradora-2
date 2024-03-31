@@ -3,6 +3,7 @@ import { GoogleMap, Marker } from '@react-google-maps/api';
 import camion from '../../parada.png';
 import parada from '../../camion.png';
 import '../../Estilos-vistas/Ruta_form.css';
+import { MdDelete } from "react-icons/md";
 
 const Map = (clave_ruta) => {
 
@@ -66,21 +67,6 @@ const Map = (clave_ruta) => {
   document.body.appendChild(script);
         }, []);
 
-        const ClickEliminar = () => 
-        {
-          const form = new FormData();
-          form.append('clave_ruta', clave_ruta.clave_ruta);
-          form.append('clave_parada', selectedMarkerE.clave_parada);
-          fetch('http://localhost/Integradora-2/BACK/rutas/delete_tramo', {
-          method: 'POST',
-          body: form
-          }).then(response => response.json())
-          .then(data => {
-              console.log(data);
-          })
-          .catch(error => console.log(error));
-          window.location.reload();
-        }
         const ClickAgregar = () => 
         {
           const form = new FormData();
@@ -96,6 +82,23 @@ const Map = (clave_ruta) => {
           .catch(error => console.log(error));
           window.location.reload();
         }
+
+        const ClickEliminar = () => 
+        {
+          const form = new FormData();
+          form.append('clave_ruta', clave_ruta.clave_ruta);
+          form.append('clave_parada', selectedMarkerE.clave_parada);
+          fetch('http://localhost/Integradora-2/BACK/rutas/delete_tramo', {
+          method: 'POST',
+          body: form
+          }).then(response => response.json())
+          .then(data => {
+              console.log(data);
+          })
+          .catch(error => console.log(error));
+          window.location.reload();
+        }
+        
 
     return (
       <div className='container_ruta'>
@@ -153,7 +156,7 @@ const Map = (clave_ruta) => {
           <p>clave: {selectedMarkerE.clave}</p>
           <p>Latitud: {selectedMarkerE.latitud}</p>
           <p>Longitud: {selectedMarkerE.longitud}</p>
-          <button onClick={ClickEliminar}>Eliminar</button>
+          <button onClick={ClickEliminar}><MdDelete />Eliminar</button>
           {/* Agrega otros campos del formulario según tus necesidades */}
           </>
           )}

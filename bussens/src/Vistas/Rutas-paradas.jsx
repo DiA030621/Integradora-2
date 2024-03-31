@@ -12,7 +12,7 @@ const Rutas_paradas = () => {
     return (
       <div>
           <Titulo
-          text={'Gestion de ruta '+ nombre}/>
+          text={'Gestion de ruta '}/>
           <Map
           clave_ruta={clave}/>
 
