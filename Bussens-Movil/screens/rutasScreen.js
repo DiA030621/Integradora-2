@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderBottomColor: '#ccc',
     borderRadius: 60,
-    marginTop: 40
   },
   searchInput: {
     height: 40,
@@ -46,7 +45,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 20,
   },
 });
 

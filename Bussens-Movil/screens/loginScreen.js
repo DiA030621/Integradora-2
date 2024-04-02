@@ -20,7 +20,7 @@ const LoginScreen = ({ navigation }) => {
       // Manejar la respuesta del backend
       if (data.resultado) {
         // Las credenciales son válidas: navegar a la pantalla principal
-        const userType = data.usuarios[0].tipo; // Obtener el tipo de usuario
+        const userType = data.usuario[0].tipo; // Obtener el tipo de usuario
         navigation.navigate(userType === 'admin' ? 'AdminScreen' : 'Main');
       } else {
         // Las credenciales no son válidas: mostrar mensaje de error
