@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Animated, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+WebBrowser.maybeCompleteAuthSession();
+
+//Android ID: 486206247887-5lcvjpgmdlr86atvabishc7q8h5d3180.apps.googleusercontent.com
 
 const InicioScreen = ({ navigation }) => {
   const slideAnimation = new Animated.Value(0);
@@ -24,6 +31,49 @@ const InicioScreen = ({ navigation }) => {
       }, 500);
     });
   }, []);
+
+  //Sign in with Google
+  const[userInfo, setUserInfo] = React.useState(null);
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId: "486206247887-5lcvjpgmdlr86atvabishc7q8h5d3180.apps.googleusercontent.com"
+  });
+
+  React.useEffect(() => {
+    handleSignInWithGoogle();
+  }, [response]);
+
+  async function handleSignInWithGoogle() {
+    const user = await getLocalUser();
+    if(!user){
+      if(response?.type === "success") {
+        getUserInfo(response.authentication.accessToken);
+      }
+    }
+    else {
+      setUserInfo(user);
+    }
+  }
+
+  const getLocalUser = async () => {
+    const data = await AsyncStorage.getItem("@user");
+    if (!data) return null;
+    return JSON.parse(data);
+  }
+
+  const getUserInfo = async (token) => {
+    if(!token) return;
+    try {
+      const response = await fetch(
+        "https://www.googleapis.com/userinfo/v2/me",
+        {
+          headers : { Authorization: `Bearer ${token}` },
+        }
+      );
+      const user = await response.json();
+      await AsyncStorage.setItem("@user", JSON.stringify(user));
+      setUserInfo(user);
+    } catch(e) {console.log(e)}
+  };
 
   return (
     <View style={styles.container}>
@@ -54,7 +104,12 @@ const InicioScreen = ({ navigation }) => {
             <Text style={[styles.buttonText, styles.blackButtonText]}>Login</Text>
           </TouchableOpacity>
           <Text style={styles.or}>-Or-</Text>
-          <TouchableOpacity style={styles.googleButton} onPress={() => {}}>
+          <TouchableOpacity style={styles.googleButton}
+            disabled={!request}
+            onPress={() => {
+              promptAsync();
+            }}
+          >
             <Image
               source={require('../assets/google_logo.png')}
               style={styles.buttonIcon}
