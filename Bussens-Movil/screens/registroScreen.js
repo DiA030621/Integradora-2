@@ -16,7 +16,7 @@ const RegistroScreen = ({ navigation }) => {
         formData.append('correo', email);
         formData.append('contra', password);
     try {
-      const response = await fetch('http://192.168.100.8/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/insert_usuario', {
+      const response = await fetch('http://192.168.100.47/Integradora-2/BACK/Usuarios/insert_usuario', {
         method: 'POST',
         body: formData
       });

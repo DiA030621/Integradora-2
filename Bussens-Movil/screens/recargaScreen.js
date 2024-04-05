@@ -1,13 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useRoute } from '@react-navigation/native';
 
 const MainScreen = () => {
-  const route = useRoute();
-  const { clave } = route.params;
   return (
     <View style={styles.container}>
-      <Text style={styles.message}>Consulta tus rutas</Text>
+      <Text style={styles.message}>Recarga</Text>
     </View>
   );
 };

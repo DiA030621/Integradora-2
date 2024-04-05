@@ -10,7 +10,7 @@ const LoginScreen = ({ navigation }) => {
         formData.append('correo', email);
         formData.append('contra', password);
     try {
-      const response = await fetch('http://192.168.100.8/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/acceso', {
+      const response = await fetch('http://192.168.100.47/Integradora-2/BACK/Usuarios/acceso', {
         method: 'POST',
         body: formData
       });
@@ -21,7 +21,9 @@ const LoginScreen = ({ navigation }) => {
       if (data.resultado) {
         // Las credenciales son válidas: navegar a la pantalla principal
         const userType = data.usuario[0].tipo; // Obtener el tipo de usuario
-        navigation.navigate(userType === 'admin' ? 'AdminScreen' : 'Main');
+        const clave=data.usuario[0].clave;
+        console.log(clave);
+        navigation.navigate(userType === 'admin' ? 'AdminScreen' : 'Main', { clave: clave });
       } else {
         // Las credenciales no son válidas: mostrar mensaje de error
         Alert.alert('Error', 'Correo o contraseña incorrectos.');

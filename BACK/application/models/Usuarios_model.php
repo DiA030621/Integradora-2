@@ -62,7 +62,7 @@ class Usuarios_model extends CI_Model
     //obtiene el registro de un usuario con correo y contraseña
     {
         $rs=$this->db
-        ->select("tipo")
+        ->select("tipo, clave")
         ->from("usuario")
         ->where('correo', $correo)
         ->where('contra', $contra)

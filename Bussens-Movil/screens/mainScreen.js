@@ -7,6 +7,7 @@ import Cartera from './carteraScreen';
 import Perfil from './perfilScreen';
 import Accesibilidad from './accesibilidadScreen';
 import { Button, View, Text } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 //Iconos
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -18,6 +19,9 @@ const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 const MainScreen = () => {
+  const route = useRoute();
+  const { clave } = route.params;
+
   const cerrarSesion = () => {
     // Aquí puedes agregar la lógica para cerrar la sesión
     console.log('Sesión cerrada');
@@ -25,12 +29,13 @@ const MainScreen = () => {
 
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name="Home" component={TabNavigation} />
-      <Drawer.Screen name="Perfil" component={Perfil} />
-      <Drawer.Screen name="Accesibilidad" component={Accesibilidad} />
+      <Drawer.Screen name="Home" component={TabNavigation} initialParams={{ clave }} />
+      <Drawer.Screen name="Perfil" component={Perfil} initialParams={{ clave }} />
+      <Drawer.Screen name="Accesibilidad" component={Accesibilidad} initialParams={{ clave }}/>
       <Drawer.Screen 
         name="Cerrar Sesión" 
         component={CerrarSesionScreen} 
+        initialParams={{ clave }}
         options={{
           drawerIcon: ({ color, size }) => (
             <FontAwesome5 name="sign-out-alt" color={color} size={size} />
@@ -42,15 +47,19 @@ const MainScreen = () => {
 };
 
 const CerrarSesionScreen = () => {
+  const route = useRoute();
+  const { clave } = route.params;
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>¿Estás seguro que deseas cerrar sesión?</Text>
-      <Button title="Cerrar Sesión" /*onPress={() => cerrarSesion()}*/ />
+      <Button title="Cerrar Sesión" onPress={() => cerrarSesion()} />
     </View>
   );
 };
 
 const TabNavigation = () => {
+  const route = useRoute();
+  const { clave } = route.params;
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -71,9 +80,9 @@ const TabNavigation = () => {
         },
       })}
     >
-      <Tab.Screen name="Rutas" component={Rutas} options={{ headerShown: false }} />
-      <Tab.Screen name="Frecuentes" component={Frecuentes} options={{ headerShown: false }} />
-      <Tab.Screen name="Cartera" component={Cartera} options={{ headerShown: false }} />
+      <Tab.Screen name="Rutas" component={Rutas} initialParams={{ clave }} options={{ headerShown: false }} />
+      <Tab.Screen name="Frecuentes" component={Frecuentes} initialParams={{ clave }} options={{ headerShown: false }} />
+      <Tab.Screen name="Cartera" component={Cartera} initialParams={{ clave }} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 };

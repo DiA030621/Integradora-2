@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 const MainScreen = () => {
+  const route = useRoute();
+  const { clave } = route.params;
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = (text) => {
