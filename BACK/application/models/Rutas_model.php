@@ -209,5 +209,44 @@ class Rutas_model extends CI_Model
         return $rs->num_rows() > 0 ? $rs-> result() : null;
     }
 
+    public function get_ruta_vehiculo($clave_vehiculo)
+    //modelo que obtiene la ruta de un vehiculo
+    {
+        $rs=$this->db
+        ->select("ar.*, nombre")
+        ->from("ruta r")
+        ->join('audita_ruta ar', 'ar.clave_ruta=r.clave')
+        ->where('ar.clave_vehiculo', $clave_vehiculo)
+        ->get();
+        return $rs->num_rows() > 0 ? $rs-> result() : null;
+    }
+
+    public function insert_ruta_vehiculo($data)
+    //ingresa una ruta a un vehiculo
+    {
+        $this->db->insert('audita_ruta', $data);
+        $rs=$this->db->affected_rows();
+        return $rs > 0;
+    }
+
+    public function update_ruta_vehiculo($data)
+    //actualiza la ruta de un vehiculo
+    {
+        $this->db
+        ->where('clave_vehiculo', $data['clave_vehiculo'])
+        ->update("audita_ruta", $data);
+        $rs=$this->db->affected_rows();
+        return $rs > 0;
+    }
+
+    public function delete_ruta_vehiculo($clave)
+    //elimina una ruta de un vehiculo
+    {
+        $this->db
+        ->where('clave_vehiculo', $clave)
+        ->delete("audita_ruta");
+        $rs=$this->db->affected_rows();
+        return $rs >0;
+    }
 }
 ?>

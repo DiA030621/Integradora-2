@@ -28,7 +28,8 @@
   
   .btn-editar,
   .btn-borrar,
-  .btn-agregar {
+  .btn-agregar,
+  .btn-ruta {
     border-radius: 20px;
     padding: 5px 10px;
     margin-left: 10px;
@@ -49,11 +50,17 @@
   color: #000; /* Color del texto dentro del botón */
   margin-bottom: 20px;
 }
+.btn-ruta {
+  background-color: seagreen; /* Color de fondo para el botón de borrar */
+  color: #000; /* Color del texto dentro del botón */
+  margin-bottom: 20px;
+}
 
   
   .btn-editar:hover,
   .btn-borrar:hover,
-  .btn-agregar:hover {
+  .btn-agregar:hover,
+  .btn-ruta:hover {
     background-color: deepskyblue;
   }
   
