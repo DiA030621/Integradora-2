@@ -7,7 +7,7 @@ const MainScreen = () => {
   const { clave } = route.params;
   return (
     <View style={styles.container}>
-      <Text style={styles.message}>Consulta tus rutas</Text>
+      <Text style={styles.message}>¡Agrega rutas a frecuentes para visualizarlas aquí!</Text>
     </View>
   );
 };

@@ -47,7 +47,7 @@ function PaymentScreen() {
     formD.append('monto', monto);
     //console.log(formData);
     try {
-      const response = await fetch('http://10.13.5.201/5toCuatrimestre/Repositorio-Integradora/BACK/pago/insert_prepago', {
+      const response = await fetch('http://192.168.0.101/5toCuatrimestre/Repositorio-Integradora/BACK/pago/insert_prepago', {
         method: 'POST',
         body: formD
       });
