@@ -9,6 +9,7 @@ const RutasScreen = ({ navigation }) => {
   const [rutas, setRutas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [filteredRutas, setFilteredRutas] = useState([]); //estado para el texto de búsqueda
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -27,7 +28,7 @@ const RutasScreen = ({ navigation }) => {
 
   const fetchRutas = async () => {
     try {
-      const response = await fetch('http://192.168.0.101/5toCuatrimestre/Repositorio-Integradora/BACK/Rutas/get_rutas');
+      const response = await fetch('http://192.168.100.50/5toCuatrimestre/Repositorio-Integradora/BACK/Rutas/get_rutas');
       const data = await response.json();
       setRutas(data.rutas);
     } catch (error) {
@@ -40,6 +41,18 @@ const RutasScreen = ({ navigation }) => {
     navigation.navigate('DetalleRuta', { nombreRuta });
   };
 
+  // Función para manejar el cambio en el texto de búsqueda
+  const handleSearch = (text) => {
+    setSearchQuery(text);
+    // Filtrar las rutas en función del texto de búsqueda
+    const filtered = rutas.filter((ruta) =>
+      ruta.nombre.toLowerCase().includes(text.toLowerCase())
+    );
+    // Actualizar el estado de las rutas filtradas
+    setFilteredRutas(filtered);
+  };
+
+  // Actualizar la lista de rutas mostradas en función de las rutas filtradas
   const renderRutaItem = ({ item }) => (
     <TouchableOpacity style={styles.rutaCard} onPress={() => handleRutaPress(item.nombre)}>
       <Text style={styles.rutaName}>{item.nombre}</Text>
@@ -47,12 +60,6 @@ const RutasScreen = ({ navigation }) => {
       <Text style={styles.rutaDescription}>{item.descripcion}</Text>
     </TouchableOpacity>
   );
-
-  //Buscador de rutas
-  const handleSearch = (text) => {
-    setSearchQuery(text);
-    // Aquí puedes agregar la lógica para filtrar las rutas en función del texto de búsqueda
-  };
 
   if (loading) {
     return (
@@ -71,7 +78,7 @@ const RutasScreen = ({ navigation }) => {
         value={searchQuery}
       />
       <FlatList
-        data={rutas}
+        data={searchQuery ? filteredRutas : rutas}
         renderItem={renderRutaItem}
         keyExtractor={(item) => item.clave.toString()} // Usamos clave como la clave única
         contentContainerStyle={styles.rutasList}

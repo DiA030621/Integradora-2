@@ -10,7 +10,7 @@ const LoginScreen = ({ navigation }) => {
         formData.append('correo', email);
         formData.append('contra', password);
     try {
-      const response = await fetch('http://192.168.0.101/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/acceso', {
+      const response = await fetch('http://192.168.100.50/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/acceso', {
         method: 'POST',
         body: formData
       });
