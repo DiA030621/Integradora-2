@@ -8,8 +8,11 @@ import {
 } from './NavbarElements';
 import { AiFillHome } from "react-icons/ai";
 import { GrWaypoint } from "react-icons/gr";
-import { FaBusSimple } from "react-icons/fa6";
+import { FaBusSimple, FaPerson  } from "react-icons/fa6";
 import { FaCarSide } from "react-icons/fa";
+import { HiOutlineUsers } from "react-icons/hi";
+
+
 
 const Navbar = (props) => {
     const [isopen, setIsOpen] = useState(false);
@@ -36,6 +39,10 @@ const Navbar = (props) => {
           <NavLink to='/paradas'><FaBusSimple /> Paradas
           </NavLink>
           <NavLink to='/vehiculos'><FaCarSide /> Vehículos
+          </NavLink>
+          <NavLink to='/empleados'><FaPerson /> Empleados
+          </NavLink>
+          <NavLink to='/usuarios'><HiOutlineUsers /> Usuarios
           </NavLink>
           <NavBtnLink onClick={logOut}>Cerrar sesión</NavBtnLink>
         </NavMenu>

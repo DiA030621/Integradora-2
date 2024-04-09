@@ -51,8 +51,8 @@ class Empleados extends CI_Controller
             'am'=>$am
         );
         $r=$this->empleados_model->insert_empleado($data);
-        $obj["resultado"] = $r != NULL; 
-        $obj["mensaje"] = $r["resultado"] ?
+        $obj["resultado"] = $r !== NULL; 
+        $obj["mensaje"] = $obj["resultado"] ?
             "Se insertaron datos correctamente" : 
             "No se insertaron los datos";
 
@@ -95,6 +95,18 @@ class Empleados extends CI_Controller
         echo json_encode($obj);
     }
 
+    public function get_chofer_vehiculo()
+    //consulta que devuelve el vehiculo de un chofer
+    {
+        $clave_chofer=$this->input->post('clave');
+        $r=$this->empleados_model->get_chofer_vehiculo($clave_chofer);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." vehiculo recuperad" : "No se encontraron vehiculos";
+        $obj["vehiculos"] = $r;
+
+        echo json_encode($obj);
+    }
 
     public function insert_chofer_vehiculo()
     //asigna un chofer a un vehiculo
@@ -119,7 +131,7 @@ class Empleados extends CI_Controller
     //se asigna un vehiculo diferente a un chofer usando la clave del chofer
     {
         $clave_chofer=$this->input->post('clave_chofer');
-        $clave_vehiculo_nuevo=$this->input->post('clave_vehiculo_nuevo');
+        $clave_vehiculo_nuevo=$this->input->post('clave_vehiculo');
         $data=array(
             'clave_chofer'=>$clave_chofer,
             'clave_vehiculo'=>$clave_vehiculo_nuevo

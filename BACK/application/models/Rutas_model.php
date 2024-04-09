@@ -96,8 +96,27 @@ class Rutas_model extends CI_Model
     }
 
 
-    public function get_vehiculos()
+    public function get_vehiculos_chofer()
     //obtiene todos los registros de vehiculos
+    {
+       /* $rs=$this->db
+        ->select("*")
+        ->from("vehiculo")
+        ->get();
+        return $rs->num_rows() > 0 ? $rs-> result() : null;*/
+        $subquery = $this->db->select('clave_vehiculo')
+            ->from('audita_chof')
+            ->get_compiled_select();
+            
+        $rs=$this->db->select('*')
+            ->from('vehiculo')
+            ->where("clave NOT IN ($subquery)", null, false)
+            ->get();
+        
+        return $rs->num_rows() > 0 ? $rs-> result() : null;
+    }
+
+    public function get_vehiculos()
     {
         $rs=$this->db
         ->select("*")

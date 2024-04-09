@@ -148,6 +148,17 @@ class Rutas extends CI_Controller
         echo json_encode($obj);
     }
 
+    public function get_vehiculos_chofer()
+    //obtiene el registro de todos los vehiculos que no tienen chofer
+    {
+        $r=$this->rutas_model->get_vehiculos_chofer();
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." vehiculos recuperados" : "No se encontraron vehiculos";
+        $obj["vehiculos"] = $r;
+
+        echo json_encode($obj);
+    }
 
     public function get_vehiculo()
     //obtiene el registro de un vehiculo segun su clave
