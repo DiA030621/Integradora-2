@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // Función para limpiar los campos de correo electrónico y contraseña
+  const limpiarCampos = () => {
+    setEmail('');
+    setPassword('');
+  };
+
+  useEffect(() => {
+    // Limpiar los campos al montar el componente
+    limpiarCampos();
+  }, []);
+
   const handleLogin = async () => {
     const formData = new FormData();
-        formData.append('correo', email);
-        formData.append('contra', password);
+    formData.append('correo', email);
+    formData.append('contra', password);
     try {
-      const response = await fetch('http://192.168.100.50/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/acceso', {
+      const response = await fetch('http://10.13.12.74/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/acceso', {
         method: 'POST',
         body: formData
       });
@@ -21,7 +32,7 @@ const LoginScreen = ({ navigation }) => {
       if (data.resultado) {
         // Las credenciales son válidas: navegar a la pantalla principal
         const userType = data.usuario[0].tipo; // Obtener el tipo de usuario
-        const clave=data.usuario[0].clave;
+        const clave = data.usuario[0].clave;
         console.log(clave);
         navigation.navigate(userType === 'admin' ? 'AdminScreen' : 'Main', { clave: clave });
       } else {
