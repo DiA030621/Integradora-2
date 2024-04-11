@@ -17,7 +17,7 @@ const CarteraScreen = () => {
     
     //console.log(formData);
     try {
-      const response = await fetch('http://192.168.100.50/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/get_usuario', {
+      const response = await fetch('http://192.168.3.18/Integradora-2/BACK/Usuarios/get_usuario', {
         method: 'POST',
         body: formData
       });

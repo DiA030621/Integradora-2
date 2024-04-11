@@ -28,7 +28,7 @@ const RutasScreen = ({ navigation }) => {
 
   const fetchRutas = async () => {
     try {
-      const response = await fetch('http://192.168.100.50/5toCuatrimestre/Repositorio-Integradora/BACK/Rutas/get_rutas');
+      const response = await fetch('http://192.168.3.18/Integradora-2/BACK/Rutas/get_rutas');
       const data = await response.json();
       setRutas(data.rutas);
     } catch (error) {
@@ -36,9 +36,9 @@ const RutasScreen = ({ navigation }) => {
     }
   };
 
-  const handleRutaPress = (nombreRuta) => {
+  const handleRutaPress = (claveRuta, nombreRuta) => {
     // Navegar a una pantalla de detalles de la ruta con el nombre de la ruta como parámetro
-    navigation.navigate('DetalleRuta', { nombreRuta });
+    navigation.navigate('DetalleRuta', { claveRuta, nombreRuta });
   };
 
   // Función para manejar el cambio en el texto de búsqueda
@@ -54,7 +54,7 @@ const RutasScreen = ({ navigation }) => {
 
   // Actualizar la lista de rutas mostradas en función de las rutas filtradas
   const renderRutaItem = ({ item }) => (
-    <TouchableOpacity style={styles.rutaCard} onPress={() => handleRutaPress(item.nombre)}>
+    <TouchableOpacity style={styles.rutaCard} onPress={() => handleRutaPress(item.clave, item.nombre)}>
       <Text style={styles.rutaName}>{item.nombre}</Text>
       <FontAwesome5 name="bookmark" style={styles.icon} />
       <Text style={styles.rutaDescription}>{item.descripcion}</Text>
