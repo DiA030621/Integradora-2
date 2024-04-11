@@ -258,7 +258,7 @@ const Empleados = () => {
             show ={showDeleteEmp}
             onHide={() => setShowDeleteEmp(false)}
       />
-      <button onClick={New} className='btn-agregar'><FaPlusCircle size={20} />Agregar Vehiculo</button>
+      <button onClick={New} className='btn-agregar'><FaPlusCircle size={20} />Agregar Empleado</button>
       <ToastContainer position="bottom-right" /> {/* Configuración de posición */}
     </Container>
   );

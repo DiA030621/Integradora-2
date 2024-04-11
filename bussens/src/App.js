@@ -6,6 +6,7 @@ import Rutas_paradas from './Vistas/Rutas-paradas';
 import Paradas from './Vistas/Paradas';
 import Vehiculos from './Vistas/Vehiculos';
 import Empleados from './Vistas/Empleados';
+import Usuarios from './Vistas/Usuarios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './Componentes/Navbar/Navbar';
 import './App.css';
@@ -45,6 +46,7 @@ function App() {
             <Route path="/paradas" element={<Paradas />} />
             <Route path="/vehiculos" element={<Vehiculos />} />
             <Route path="/empleados" element={<Empleados />} />
+            <Route path="/usuarios" element={<Usuarios />} />
           </Routes>
         </BrowserRouter>
       ) : (

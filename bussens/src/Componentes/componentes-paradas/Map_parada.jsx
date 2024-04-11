@@ -4,6 +4,8 @@ import camion from '../../parada.png';
 import '../../Estilos-vistas/parada.css';
 import { MdDelete } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Map_parada() {
     
@@ -15,7 +17,6 @@ function Map_parada() {
     const [parada, setParada] = useState([]);
     const [coordenadas, setCoordenadas] = useState([]);
     const [mostrarForm, setMostrarForm] = useState(false);
-    const [errorMensaje, setErrorMensaje] = useState(false);
     const [mensaje, setMensaje] = useState(false);
     const [eliminarForm, setEliminarForm] = useState(false);
     const [mensajeEliminado, setMensajeEliminado] = useState(false);
@@ -38,9 +39,6 @@ function Map_parada() {
     const NewStop = (event) =>
     {        
       setEliminarForm(false);
-      setErrorMensaje(false);
-      setMensaje(false);
-      setMensajeEliminado(false);
         if (event.detail && event.detail.latLng) {
             // Obtén la latitud y longitud del evento de clic
             const lat = event.detail.latLng.lat;
@@ -61,7 +59,8 @@ function Map_parada() {
       const longFormulario = event.target[2].value;
       if (nombreFormulario.trim() === '') {
         // Si el campo de nombre está vacío, muestra un mensaje de error
-        setErrorMensaje(true);
+        //setErrorMensaje(true);
+        toast.error("debes llenar todos los campos")
         return;
       }
       //console.log(nombreFormulario);
@@ -81,6 +80,7 @@ function Map_parada() {
           {
             console.log(data.resulatdo);
             setMensaje(true);
+            toast.success('se ingresaron los datos correctamente')
             setMostrarForm(false);
           })
         .catch(error => console.log(error))
@@ -99,8 +99,9 @@ function Map_parada() {
         .then(response => response.json())
         .then(data => 
           {
-            console.log(data.resulatdo);
+            //console.log(data.resulatdo);
             setMensajeEliminado(true);
+            toast.warning(data.mensaje)
             setMostrarForm(false);
             setEliminarForm(false);
           })
@@ -174,10 +175,8 @@ function Map_parada() {
 
             <button className="btn-eliminar-parada" type="submit"><MdDelete size={16} />Eliminar</button>  
         </form>}
-        {errorMensaje && <p style={{ color: 'red', fontSize: '1.2rem' }}>Debes de llenar todos los campos</p>}
-        {mensaje && <p style={{ color: 'green', fontSize: '1.2rem' }}>Se ingresaron los datos correctamente</p>}
-        {mensajeEliminado && <p style={{ color: 'orange', fontSize: '1.2rem' }}>Se elimino correctamente la parada</p>}
-    </div>
+        </div>
+    <ToastContainer position="bottom-right" />
   </div>
   );
 }

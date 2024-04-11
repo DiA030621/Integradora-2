@@ -83,13 +83,12 @@ class Rutas_model extends CI_Model
     }
 
 
-    public function delete_tramo($data)
+    public function delete_tramo($clave)
     /*elimina un tramo usando
     la clave de ruta y la clave de parada*/
     {
         $this->db
-        ->where('clave_ruta', $data['clave_ruta'])
-        ->where('clave_parada', $data['clave_parada'])
+        ->where('clave', $clave)
         ->delete("tramos");
         $rs=$this->db->affected_rows();
         return $rs >0;

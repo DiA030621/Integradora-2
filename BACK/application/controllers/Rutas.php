@@ -120,13 +120,8 @@ class Rutas extends CI_Controller
     //elimina parada de una ruta
     //otras palabras, elimina un tramo de una ruta
     {
-        $clave_ruta=$this->input->post('clave_ruta');
-        $clave_parada=$this->input->post('clave_parada');
-        $data=array(
-            'clave_ruta'=>$clave_ruta,
-            'clave_parada'=>$clave_parada
-        );
-        $r=$this->rutas_model->delete_tramo($data);
+        $clave=$this->input->post('clave');
+        $r=$this->rutas_model->delete_tramo($clave);
         $obj["resultado"] = $r != NULL; 
         $obj["mensaje"] = $obj["resultado"] ?
             "Se eliminaron datos correctamente" : 

@@ -9,7 +9,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const FormVehiChof = ({ clave, onCancelar, onGuardar, onDelete, show, onHide, forceRender, onValidacion }) => {
     
-    const [claveChofer, setClaveChofer] = useState(null);
     const [claveVehiculo, setClaveVehiculo] = useState(null);
     const [vehiculos, setVehiculos] = useState([]);
     const [actualizar, setActualizar] = useState(false);
@@ -29,11 +28,9 @@ const FormVehiChof = ({ clave, onCancelar, onGuardar, onDelete, show, onHide, fo
             .then(data => {
                 if (data.resultado)
                 {
-                    setClaveChofer(data.vehiculos[0].clave_chofer);
                     setClaveVehiculo(data.vehiculos[0].clave_vehiculo);
                     setActualizar(true);
                 }else{
-                    setClaveChofer(null);
                     setClaveVehiculo(null);
                     setActualizar(false);
                 }
