@@ -20,7 +20,7 @@ function FormLogin (props)
 
         try 
         {
-            const response = await fetch('http://localhost/Integradora-2/BACK/Usuarios/acceso', {
+            const response = await fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/acceso', {
             method: 'POST',
             body: formData
             });

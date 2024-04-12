@@ -21,7 +21,7 @@ const DetalleRutaScreen = ({ route, navigation }) => {
       formData.append('clave_ruta', clave);
       
       try {
-        const response = await fetch('http://192.168.1.65/GITHUB/elverdadero/Integradora-2/BACK/rutas/get_tramo', {
+        const response = await fetch('http://192.168.3.102/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/get_tramo', {
           method: 'POST',
           body: formData
         });
@@ -56,6 +56,11 @@ const DetalleRutaScreen = ({ route, navigation }) => {
       setLocation(location);
     })();
   }, []);
+
+  // Establecer el nombre de la ruta en el header
+  useEffect(() => {
+    navigation.setOptions({ headerTitle: 'Ruta ' + nombre });
+  }, [nombre, navigation]);
 
   return (
     <MapView

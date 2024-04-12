@@ -21,7 +21,7 @@ const Empleados = () => {
 
   useEffect(() => {
     // Realizar la solicitud HTTP a la API
-    fetch('http://localhost/Integradora-2/BACK/empleados/get_empleados')
+    fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/empleados/get_empleados')
       .then(response => response.json())
       .then(data => {
         if (data.resultado) {
@@ -82,7 +82,7 @@ const Empleados = () => {
         formUpdateEmpleado.append('ap', e.target[2].value);
         formUpdateEmpleado.append('am', e.target[3].value);
         //console.log(formUpdateVehiculo.get('clave'));
-        fetch('http://localhost/Integradora-2/BACK/empleados/update_empleado',
+        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/empleados/update_empleado',
         {
           method: 'POST',
           body: formUpdateEmpleado
@@ -113,7 +113,7 @@ const Empleados = () => {
         formAgregarEmp.append('ap', e.target[1].value);
         formAgregarEmp.append('am', e.target[2].value);
         //console.log(formUpdateVehiculo.get('clave'));
-        fetch('http://localhost/Integradora-2/BACK/empleados/insert_empleado',
+        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/empleados/insert_empleado',
         {
           method: 'POST',
           body: formAgregarEmp
@@ -134,7 +134,7 @@ const Empleados = () => {
     const formDeleteEmp = new FormData();
         formDeleteEmp.append('clave', clave);
         //console.log(formUpdateVehiculo.get('clave'));
-        fetch('http://localhost/Integradora-2/BACK/empleados/delete_empleado',
+        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/empleados/delete_empleado',
         {
           method: 'POST',
           body: formDeleteEmp
@@ -163,7 +163,7 @@ const Empleados = () => {
     console.log(url);*/
     //(actualizar);
     const url= actualizar? 'update_chofer_vehiculo' :'insert_chofer_vehiculo';
-    fetch('http://localhost/Integradora-2/BACK/empleados/' + url,
+    fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/empleados/' + url,
         {
         method: 'POST',
         body: formGuardar
@@ -190,7 +190,7 @@ const Empleados = () => {
     const formEliminar = new FormData();
     formEliminar.append('clave_chofer', clave);
 
-    fetch('http://localhost/Integradora-2/BACK/empleados/delete_chofer_vehiculo',
+    fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/empleados/delete_chofer_vehiculo',
         {
         method: 'POST',
         body: formEliminar

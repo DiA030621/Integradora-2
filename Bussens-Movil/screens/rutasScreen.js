@@ -28,7 +28,7 @@ const RutasScreen = ({ navigation }) => {
 
   const fetchRutas = async () => {
     try {
-      const response = await fetch('http://192.168.1.65/GITHUB/elverdadero/Integradora-2/BACK/Rutas/get_rutas');
+      const response = await fetch('http://192.168.3.102/5toCuatrimestre/Repositorio-Integradora/BACK/Rutas/get_rutas');
       const data = await response.json();
       setRutas(data.rutas);
     } catch (error) {

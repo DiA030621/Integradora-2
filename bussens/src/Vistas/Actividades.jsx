@@ -6,7 +6,7 @@ function Actividades() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost/Integradora-2/BACK/rutas/grafica_pago')
+    fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/grafica_pago')
       .then(response => response.json())
       .then(data => {
         setData(data.rutas);

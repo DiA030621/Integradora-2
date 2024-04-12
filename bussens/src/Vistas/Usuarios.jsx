@@ -19,7 +19,7 @@ const Usuarios = () => {
 
   useEffect(() => {
     // Realizar la solicitud HTTP a la API
-    fetch('http://localhost/Integradora-2/BACK/usuarios/get_usuarios')
+    fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/usuarios/get_usuarios')
       .then(response => response.json())
       .then(data => {
         if (data.resultado) {
@@ -76,7 +76,7 @@ const Usuarios = () => {
         formUpdateUsu.append('tipo', 'Clien');
         formUpdateUsu.append('saldo', e.target[6].value);
         //console.log(formUpdateVehiculo.get('clave'));
-        fetch('http://localhost/Integradora-2/BACK/usuarios/update_usuario',
+        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/usuarios/update_usuario',
         {
           method: 'POST',
           body: formUpdateUsu
@@ -114,7 +114,7 @@ const Usuarios = () => {
         console.log(formAgregarUsu.saldo);
         //console.log(formUpdateVehiculo.get('clave'));
         
-        fetch('http://localhost/Integradora-2/BACK/usuarios/insert_usuario',
+        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/usuarios/insert_usuario',
         {
           method: 'POST',
           body: formAgregarUsu
@@ -135,7 +135,7 @@ const Usuarios = () => {
     const formDeleteUsu = new FormData();
         formDeleteUsu.append('clave', clave);
         //console.log(formUpdateVehiculo.get('clave'));
-        fetch('http://localhost/Integradora-2/BACK/usuarios/delete_usuario',
+        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/usuarios/delete_usuario',
         {
           method: 'POST',
           body: formDeleteUsu

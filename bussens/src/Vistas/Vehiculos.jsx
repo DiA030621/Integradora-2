@@ -21,7 +21,7 @@ const Rutas = () => {
 
   useEffect(() => {
     // Realizar la solicitud HTTP a la API
-    fetch('http://localhost/Integradora-2/BACK/rutas/get_vehiculos')
+    fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/get_vehiculos')
       .then(response => response.json())
       .then(data => {
         if (data.resultado) {
@@ -82,7 +82,7 @@ const Rutas = () => {
         formUpdateVehiculo.append('placa', e.target[3].value);
         formUpdateVehiculo.append('estado', e.target[4].checked ? "activo":"mantenimiento");
         //console.log(formUpdateVehiculo.get('clave'));
-        fetch('http://localhost/Integradora-2/BACK/rutas/update_vehiculo',
+        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/update_vehiculo',
         {
           method: 'POST',
           body: formUpdateVehiculo
@@ -114,7 +114,7 @@ const Rutas = () => {
         formUpdateVehiculo.append('placa', e.target[2].value);
         formUpdateVehiculo.append('estado', e.target[3].checked ? "activo":"mantenimiento");
         //console.log(formUpdateVehiculo.get('clave'));
-        fetch('http://localhost/Integradora-2/BACK/rutas/insert_vehiculo',
+        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/insert_vehiculo',
         {
           method: 'POST',
           body: formUpdateVehiculo
@@ -135,7 +135,7 @@ const Rutas = () => {
     const formUpdateVehiculo = new FormData();
         formUpdateVehiculo.append('clave', clave);
         //console.log(formUpdateVehiculo.get('clave'));
-        fetch('http://localhost/Integradora-2/BACK/rutas/delete_vehiculo',
+        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/delete_vehiculo',
         {
           method: 'POST',
           body: formUpdateVehiculo
@@ -160,7 +160,7 @@ const Rutas = () => {
     formGuardar.append('clave_ruta', claveRuta);
     const url= actualizar? 'update_ruta_vehiculo' :'insert_ruta_vehiculo';
     //(actualizar);
-    fetch('http://localhost/Integradora-2/BACK/rutas/' + url,
+    fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/' + url,
         {
         method: 'POST',
         body: formGuardar
@@ -187,7 +187,7 @@ const Rutas = () => {
     const formEliminar = new FormData();
     formEliminar.append('clave_vehiculo', claveVehiculo);
 
-    fetch('http://localhost/Integradora-2/BACK/rutas/delete_ruta_vehiculo',
+    fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/delete_ruta_vehiculo',
         {
         method: 'POST',
         body: formEliminar

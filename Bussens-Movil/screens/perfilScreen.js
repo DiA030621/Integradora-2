@@ -12,7 +12,7 @@ const PerfilScreen = () => {
       try {
         const formData = new FormData();
         formData.append('clave', clave);
-        const response = await fetch('http://192.168.1.65/GITHUB/elverdadero/Integradora-2/BACK/Usuarios/get_usuario', {
+        const response = await fetch('http://192.168.3.102/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/get_usuario', {
           method: 'POST',
           body: formData
         });
