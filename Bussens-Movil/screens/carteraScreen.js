@@ -17,7 +17,7 @@ const CarteraScreen = () => {
     
     //console.log(formData);
     try {
-      const response = await fetch('http://10.13.12.74/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/get_usuario', {
+      const response = await fetch('http://192.168.1.65/GITHUB/elverdadero/Integradora-2/BACK/Usuarios/get_usuario', {
         method: 'POST',
         body: formData
       });

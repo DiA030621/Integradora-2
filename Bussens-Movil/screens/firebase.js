@@ -1,6 +1,5 @@
-// Importa las funciones que necesitas del SDK de Firebase
 import { initializeApp, getApps } from "firebase/app";
-import { getDatabase, ref, get } from "firebase/database";
+import { getDatabase, ref, get, onValue } from "firebase/database";
 import {
  getFirestore,
  collection,
@@ -37,6 +36,9 @@ const dbFirestore = getFirestore();
 // Declara una variable global para almacenar la referencia del listener
 let realtimeListener;
 
+let longitude; // Declara la variable longitude
+let latitude; // Declara la variable latitude
+
 async function readDataRealTime() {
  const dataRef = ref(dbRealTime, "location/");
 
@@ -45,7 +47,8 @@ async function readDataRealTime() {
     if (snapshot.exists()) {
       const data = snapshot.val();
       console.log("Datos leídos correctamente:", data); // Log para verificar la lectura de datos
-      const { latitude, longitude, month, day, year } = data;
+      ({ latitude, longitude } = data); // Asigna los valores de latitude y longitude obtenidos de los datos
+      const { month, day, year } = data;
       await insertDataInFirestore({ latitude, longitude, month, day, year });
       //compararYAlertar(data);
     } else {
@@ -86,7 +89,4 @@ async function insertDataInFirestore(data) {
 
 setInterval(readDataRealTime, 30000);
 
-export {
- readDataRealTime,
- insertDataInFirestore,
-};
+export { readDataRealTime, insertDataInFirestore, longitude, latitude };
