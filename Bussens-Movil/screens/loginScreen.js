@@ -21,7 +21,7 @@ const LoginScreen = ({ navigation }) => {
     formData.append('correo', email);
     formData.append('contra', password);
     try {
-      const response = await fetch('http://192.168.3.102/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/acceso', {
+      const response = await fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/Usuarios/acceso', {
         method: 'POST',
         body: formData
       });
