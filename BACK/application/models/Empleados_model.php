@@ -5,10 +5,12 @@ class Empleados_model extends CI_Model
     //obtiene todos los registros de empleados y sus vehiculos
     {
         $rs=$this->db
-        ->select("c.*, v.*")
+        ->select('*')
+        ->from('chofer')
+        /*->select("c.*, v.")
         ->from("audita_chof a")
         ->join('chofer c', 'c.clave=a.clave_chofer')
-        ->join('vehiculo v', 'v.clave=a.clave_vehiculo')
+        ->join('vehiculo v', 'v.clave=a.clave_vehiculo')*/
         ->get();
         return $rs->num_rows() > 0 ? $rs-> result() : null;
     }
@@ -57,6 +59,15 @@ class Empleados_model extends CI_Model
         return $rs >0;
     }
 
+    public function get_chofer_vehiculo($clave)
+    {
+        $rs=$this->db
+        ->select("*")
+        ->from("audita_chof")
+        ->where('clave_chofer', $clave)
+        ->get();
+        return $rs->num_rows() > 0 ? $rs-> result() : null;
+    }
 
     public function insert_chofer_vehiculo($data)
     //inserta un registro de chofer y su vehiculo 

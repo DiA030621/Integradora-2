@@ -83,21 +83,39 @@ class Rutas_model extends CI_Model
     }
 
 
-    public function delete_tramo($data)
+    public function delete_tramo($clave)
     /*elimina un tramo usando
     la clave de ruta y la clave de parada*/
     {
         $this->db
-        ->where('clave_ruta', $data['clave_ruta'])
-        ->where('clave_parada', $data['clave_parada'])
+        ->where('clave', $clave)
         ->delete("tramos");
         $rs=$this->db->affected_rows();
         return $rs >0;
     }
 
 
-    public function get_vehiculos()
+    public function get_vehiculos_chofer()
     //obtiene todos los registros de vehiculos
+    {
+       /* $rs=$this->db
+        ->select("*")
+        ->from("vehiculo")
+        ->get();
+        return $rs->num_rows() > 0 ? $rs-> result() : null;*/
+        $subquery = $this->db->select('clave_vehiculo')
+            ->from('audita_chof')
+            ->get_compiled_select();
+            
+        $rs=$this->db->select('*')
+            ->from('vehiculo')
+            ->where("clave NOT IN ($subquery)", null, false)
+            ->get();
+        
+        return $rs->num_rows() > 0 ? $rs-> result() : null;
+    }
+
+    public function get_vehiculos()
     {
         $rs=$this->db
         ->select("*")
@@ -209,5 +227,57 @@ class Rutas_model extends CI_Model
         return $rs->num_rows() > 0 ? $rs-> result() : null;
     }
 
+    public function get_ruta_vehiculo($clave_vehiculo)
+    //modelo que obtiene la ruta de un vehiculo
+    {
+        $rs=$this->db
+        ->select("ar.*, nombre")
+        ->from("ruta r")
+        ->join('audita_ruta ar', 'ar.clave_ruta=r.clave')
+        ->where('ar.clave_vehiculo', $clave_vehiculo)
+        ->get();
+        return $rs->num_rows() > 0 ? $rs-> result() : null;
+    }
+
+    public function insert_ruta_vehiculo($data)
+    //ingresa una ruta a un vehiculo
+    {
+        $this->db->insert('audita_ruta', $data);
+        $rs=$this->db->affected_rows();
+        return $rs > 0;
+    }
+
+    public function update_ruta_vehiculo($data)
+    //actualiza la ruta de un vehiculo
+    {
+        $this->db
+        ->where('clave_vehiculo', $data['clave_vehiculo'])
+        ->update("audita_ruta", $data);
+        $rs=$this->db->affected_rows();
+        return $rs > 0;
+    }
+
+    public function delete_ruta_vehiculo($clave)
+    //elimina una ruta de un vehiculo
+    {
+        $this->db
+        ->where('clave_vehiculo', $clave)
+        ->delete("audita_ruta");
+        $rs=$this->db->affected_rows();
+        return $rs >0;
+    }
+
+    public function grafica_pago()
+    {
+        $rs=$this->db->select('r.nombre AS nombre_ruta, COUNT(*) AS contador_pagos')
+        ->from('pago p')
+        ->join('vehiculo v', 'p.clave_vehiculo = v.clave')
+        ->join('audita_ruta ar', 'v.clave = ar.clave_vehiculo')
+        ->join('ruta r', 'ar.clave_ruta = r.clave')
+        ->group_by('r.nombre')
+        ->get();
+        //die($this->db->last_query());
+        return $rs->num_rows() > 0 ? $rs-> result() : null;
+    }
 }
 ?>

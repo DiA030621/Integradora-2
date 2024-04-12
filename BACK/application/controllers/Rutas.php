@@ -120,13 +120,8 @@ class Rutas extends CI_Controller
     //elimina parada de una ruta
     //otras palabras, elimina un tramo de una ruta
     {
-        $clave_ruta=$this->input->post('clave_ruta');
-        $clave_parada=$this->input->post('clave_parada');
-        $data=array(
-            'clave_ruta'=>$clave_ruta,
-            'clave_parada'=>$clave_parada
-        );
-        $r=$this->rutas_model->delete_tramo($data);
+        $clave=$this->input->post('clave');
+        $r=$this->rutas_model->delete_tramo($clave);
         $obj["resultado"] = $r != NULL; 
         $obj["mensaje"] = $obj["resultado"] ?
             "Se eliminaron datos correctamente" : 
@@ -148,6 +143,17 @@ class Rutas extends CI_Controller
         echo json_encode($obj);
     }
 
+    public function get_vehiculos_chofer()
+    //obtiene el registro de todos los vehiculos que no tienen chofer
+    {
+        $r=$this->rutas_model->get_vehiculos_chofer();
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." vehiculos recuperados" : "No se encontraron vehiculos";
+        $obj["vehiculos"] = $r;
+
+        echo json_encode($obj);
+    }
 
     public function get_vehiculo()
     //obtiene el registro de un vehiculo segun su clave
@@ -312,6 +318,77 @@ class Rutas extends CI_Controller
         $obj["mensaje"] = $obj["resultado"] ? 
             count($r)." paradas recuperadas" : "No se encontraron paradas";
         $obj["paradas"] = $r;
+
+        echo json_encode($obj);
+    }
+
+    public function get_ruta_vehiculo()
+    //controlador que obtiene la ruta del vehiculo en caso de que tenga
+    {
+        $clave_vehiculo=$this->input->post('clave_vehiculo');
+        $r=$this->rutas_model->get_ruta_vehiculo($clave_vehiculo);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." ruta" : "No se encontro ruta del vehiculo ";
+        $obj["ruta_vehiculo"] = $r;
+
+        echo json_encode($obj);
+
+    }
+
+    public function insert_ruta_vehiculo()
+    //controlador que inserta una ruta en un vehiculo
+    {
+        $clave_vehiculo=$this->input->post('clave_vehiculo');
+        $clave_ruta=$this->input->post('clave_ruta');
+        $data=array(
+            'clave_vehiculo'=>$clave_vehiculo,
+            'clave_ruta'=>$clave_ruta
+        );
+        $r=$this->rutas_model->insert_ruta_vehiculo($data);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            "Se inserto correctamente los datos" : "No se insertaron los datos";
+
+        echo json_encode($obj);
+    }
+    
+    public function update_ruta_vehiculo()
+    //controlador que inserta una ruta en un vehiculo
+    {
+        $clave_vehiculo=$this->input->post('clave_vehiculo');
+        $clave_ruta=$this->input->post('clave_ruta');
+        $data=array(
+            'clave_vehiculo'=>$clave_vehiculo,
+            'clave_ruta'=>$clave_ruta
+        );
+        $r=$this->rutas_model->update_ruta_vehiculo($data);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            "Se actualizaron correctamente los datos" : "No se actualizaron los datos";
+
+        echo json_encode($obj);
+    }
+
+    public function delete_ruta_vehiculo()
+    //controlador que elimina una ruta de un vehiculo usando clave de vehiculo
+    {
+        $clave_vehiculo=$this->input->post('clave_vehiculo');
+        $r=$this->rutas_model->delete_ruta_vehiculo($clave_vehiculo);
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            "Se eliminaron correctamente los datos" : "No se eliminaron los datos";
+
+        echo json_encode($obj);
+    }
+
+    public function grafica_pago()
+    {
+        $r=$this->rutas_model->grafica_pago();
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." rutas recuperados" : "No se encontraron rutas";
+        $obj["rutas"] = $r;
 
         echo json_encode($obj);
     }

@@ -59,8 +59,8 @@ function FormLogin (props)
         setError('');
     };
     return(
-        <div className="box">
-            <div className="form sign_in">
+        <div className="boxx">
+            <div className="form sign_inn">
                 <h3>Iniciar Sesión</h3>
                 <span>Use su correo para iniciar</span>
 

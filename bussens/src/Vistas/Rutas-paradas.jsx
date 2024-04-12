@@ -7,11 +7,12 @@ const Rutas_paradas = () => {
     
     const location = useLocation();
   const clave = location.state?.clave;
+  const nombre = location.state?.nombre;
   
     return (
       <div>
           <Titulo
-          text={clave}/>
+          text={'Gestion de ruta '}/>
           <Map
           clave_ruta={clave}/>
 
