@@ -11,6 +11,7 @@ import { GrWaypoint } from "react-icons/gr";
 import { FaBusSimple, FaPerson  } from "react-icons/fa6";
 import { FaCarSide } from "react-icons/fa";
 import { HiOutlineUsers } from "react-icons/hi";
+import { MdMonitorHeart } from "react-icons/md";
 
 
 
@@ -43,6 +44,8 @@ const Navbar = (props) => {
           <NavLink to='/empleados'><FaPerson /> Empleados
           </NavLink>
           <NavLink to='/usuarios'><HiOutlineUsers /> Usuarios
+          </NavLink>
+          <NavLink to='/graficas'><MdMonitorHeart /> Monitoreo
           </NavLink>
           <NavBtnLink onClick={logOut}>Cerrar sesión</NavBtnLink>
         </NavMenu>

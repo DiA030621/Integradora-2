@@ -382,6 +382,17 @@ class Rutas extends CI_Controller
         echo json_encode($obj);
     }
 
+    public function grafica_pago()
+    {
+        $r=$this->rutas_model->grafica_pago();
+        $obj["resultado"] = $r != NULL;
+        $obj["mensaje"] = $obj["resultado"] ? 
+            count($r)." rutas recuperados" : "No se encontraron rutas";
+        $obj["rutas"] = $r;
+
+        echo json_encode($obj);
+    }
+
 
 }
 ?>

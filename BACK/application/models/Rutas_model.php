@@ -266,5 +266,18 @@ class Rutas_model extends CI_Model
         $rs=$this->db->affected_rows();
         return $rs >0;
     }
+
+    public function grafica_pago()
+    {
+        $rs=$this->db->select('r.nombre AS nombre_ruta, COUNT(*) AS contador_pagos')
+        ->from('pago p')
+        ->join('vehiculo v', 'p.clave_vehiculo = v.clave')
+        ->join('audita_ruta ar', 'v.clave = ar.clave_vehiculo')
+        ->join('ruta r', 'ar.clave_ruta = r.clave')
+        ->group_by('r.nombre')
+        ->get();
+        //die($this->db->last_query());
+        return $rs->num_rows() > 0 ? $rs-> result() : null;
+    }
 }
 ?>
