@@ -21,7 +21,7 @@ const DetalleRutaScreen = ({ route, navigation }) => {
       formData.append('clave_ruta', clave);
       
       try {
-        const response = await fetch('http://192.168.1.65/GITHUB/elverdadero/Integradora-2/BACK/rutas/get_tramo', {
+        const response = await fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/rutas/get_tramo', {
           method: 'POST',
           body: formData
         });

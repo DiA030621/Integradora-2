@@ -21,7 +21,7 @@ const LoginScreen = ({ navigation }) => {
     formData.append('correo', email);
     formData.append('contra', password);
     try {
-      const response = await fetch('http://192.168.1.65/GITHUB/elverdadero/Integradora-2/BACK/Usuarios/acceso', {
+      const response = await fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/Usuarios/acceso', {
         method: 'POST',
         body: formData
       });
