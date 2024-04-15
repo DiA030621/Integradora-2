@@ -103,7 +103,7 @@ const InicioScreen = ({ navigation }) => {
           <TouchableOpacity style={styles.blackButton} onPress={handleGoLogin}>
             <Text style={[styles.buttonText, styles.blackButtonText]}>Login</Text>
           </TouchableOpacity>
-          <Text style={styles.or}>-Or-</Text>
+          {/*<Text style={styles.or}>-Or-</Text>
           <TouchableOpacity style={styles.googleButton}
             disabled={!request}
             onPress={() => {
@@ -115,7 +115,7 @@ const InicioScreen = ({ navigation }) => {
               style={styles.buttonIcon}
             />
             <Text style={styles.buttonText}>Sign in with Google</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>*/}
         </View>
       )}
     </View>
