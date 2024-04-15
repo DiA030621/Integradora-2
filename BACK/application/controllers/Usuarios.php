@@ -79,6 +79,23 @@ class Usuarios extends CI_Controller
         echo json_encode($obj);
     }
 
+    public function get_usuarios_ruta()
+    {
+        // Obtener el ID del usuario desde la solicitud POST
+        $claveUsuario = $this->input->post('clave_usuario');
+
+        // Realizar la consulta para obtener las rutas más utilizadas por el usuario
+        $rutas = $this->usuarios_model->get_usuarios_ruta($claveUsuario);
+
+        // Construir la respuesta JSON
+        $response["resultado"] = $rutas != NULL; 
+        $response["mensaje"] = $response["resultado"] ? "Datos recuperados correctamente" : "No se encontraron datos";
+        $response["rutas"] = $rutas;
+
+        // Enviar la respuesta JSON al cliente
+        echo json_encode($response);
+    }
+
 
     public function update_usuario()
     //controlador para actualizar los datos de un usuario cualquiera

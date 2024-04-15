@@ -26,6 +26,25 @@ class Usuarios_model extends CI_Model
         return $rs->num_rows() > 0 ? $rs-> result() : null;
     }
 
+    public function get_usuarios_ruta($claveUsuario)
+    {
+        // Realizar la consulta SQL para obtener las rutas más utilizadas por el usuario
+        $this->db->select('ruta.nombre, COUNT(*) as cantidad');
+        $this->db->from('pago');
+        $this->db->join('vehiculo', 'pago.clave_vehiculo = vehiculo.clave');
+        $this->db->join('audita_ruta', 'vehiculo.clave = audita_ruta.clave_vehiculo');
+        $this->db->join('ruta', 'audita_ruta.clave_ruta = ruta.clave');
+        $this->db->where('pago.clave_usuario', $claveUsuario);
+        $this->db->group_by('ruta.nombre');
+        $this->db->order_by('cantidad', 'DESC');
+
+        // Ejecutar la consulta SQL
+        $query = $this->db->get();
+
+        // Devolver los resultados de la consulta
+        return $query->num_rows() > 0 ? $query->result_array() : null;
+    }
+
     
     public function insert_usuario($data)
     //inserta un registro de un usuario
