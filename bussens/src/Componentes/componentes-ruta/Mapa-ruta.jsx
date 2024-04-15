@@ -23,7 +23,7 @@ const Mapa = (clave_ruta) => {
             const formData = new FormData();
                 formData.append('clave_ruta', clave_ruta.clave_ruta);
             // Llamada a la primera API para obtener las paradas
-            fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/get_parada_tramo',{
+            fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/rutas/get_parada_tramo',{
               method: 'POST',
                 body: formData
             })
@@ -33,7 +33,7 @@ const Mapa = (clave_ruta) => {
           })
           .catch(error => console.log(error));
 
-          fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/get_tramo', {
+          fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/rutas/get_tramo', {
           method: 'POST',
           body: formData
           })
@@ -71,7 +71,7 @@ const Mapa = (clave_ruta) => {
             const formGuardar = new FormData();
             formGuardar.append('clave_ruta', clave_ruta.clave_ruta);
             formGuardar.append('clave_parada', event.target[0].value);
-            fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/insert_tramo',
+            fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/rutas/insert_tramo',
             {
               method: 'POST',
               body: formGuardar
@@ -92,7 +92,7 @@ const Mapa = (clave_ruta) => {
           //console.log(event.target[0].value);
             const formEliminar = new FormData();
             formEliminar.append('clave', event.target[0].value);
-            fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/delete_tramo',
+            fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/rutas/delete_tramo',
             {
               method: 'POST',
               body: formEliminar

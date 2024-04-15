@@ -14,7 +14,7 @@ const Rutas = () => {
 
   useEffect(() => {
     // Realizar la solicitud HTTP a la API
-    fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/get_rutas')
+    fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/rutas/get_rutas')
       .then(response => response.json())
       .then(data => {
         if (data.resultado) {

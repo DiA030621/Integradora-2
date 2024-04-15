@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { LoginSocialFacebook, LoginSocialGoogle } from 'reactjs-social-login';
+import { FacebookLoginButton, GoogleLoginButton } from 'react-social-login-buttons';
+import { GoogleLogin } from '@react-oauth/google';
 
 function FormLogin (props)
 {
@@ -20,7 +23,7 @@ function FormLogin (props)
 
         try 
         {
-            const response = await fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/Usuarios/acceso', {
+            const response = await fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/Usuarios/acceso', {
             method: 'POST',
             body: formData
             });
@@ -73,7 +76,26 @@ function FormLogin (props)
                     </div>
                 
                     <button className="btn bkg" type="submit">Iniciar Sesión</button>
-
+                    <LoginSocialFacebook
+                    appId="955448865978730"
+                    onResolve={(response)=>{
+                    console.log(response);
+                    }}
+                    onReject={(error)=>{
+                        console.log(error);
+                    }}
+                    >
+                        <FacebookLoginButton/>
+                    </LoginSocialFacebook>
+                    <GoogleLogin
+                    onSuccess={credentialResponse => {
+                        console.log('se logro');
+                        console.log(credentialResponse);
+                    }}
+                    onError={() => {
+                        console.log('Login Failed');
+                    }}
+                    />
                     {error && <p style={{ color: 'red' }}>{error}</p>}
                 </form>
             </div>

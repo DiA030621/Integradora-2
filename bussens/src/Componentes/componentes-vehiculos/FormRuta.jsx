@@ -20,7 +20,7 @@ const FormRuta = ({ clave, onCancelar, onGuardar, onDelete, show, onHide, forceR
         const form = new FormData();
         form.append('clave_vehiculo', clave);
         
-        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/get_ruta_vehiculo',
+        fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/rutas/get_ruta_vehiculo',
             {
             method: 'POST',
             body: form
@@ -42,7 +42,7 @@ const FormRuta = ({ clave, onCancelar, onGuardar, onDelete, show, onHide, forceR
                 {
                     console.error('Error al obtener la ruta del vehiculo:', error);
                 });
-        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/utas/get_rutas')
+        fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/rutas/get_rutas')
                 .then(response => response.json())
                 .then(data => {
                     if (data.resultado)

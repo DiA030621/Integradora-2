@@ -23,7 +23,7 @@ function Map_parada() {
 
     useEffect(() => {
         // Llamada a la primera API para obtener las paradas
-        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/get_paradas',{
+        fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/rutas/get_paradas',{
             method: 'GET'
         })
       .then(response => response.json())
@@ -70,7 +70,7 @@ function Map_parada() {
         form.append('nombre', nombreFormulario);
         form.append('latitud', latFormulario);
         form.append('longitud', longFormulario);
-        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/insert_parada',
+        fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/rutas/insert_parada',
         {
           method: 'POST',
           body: form
@@ -91,7 +91,7 @@ function Map_parada() {
       
         const formDelete = new FormData();
         formDelete.append('clave', clave);
-        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/rutas/delete_parada',
+        fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/rutas/delete_parada',
         {
           method: 'POST',
           body: formDelete

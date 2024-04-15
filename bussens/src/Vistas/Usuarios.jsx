@@ -19,7 +19,7 @@ const Usuarios = () => {
 
   useEffect(() => {
     // Realizar la solicitud HTTP a la API
-    fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/usuarios/get_usuarios')
+    fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/usuarios/get_usuarios')
       .then(response => response.json())
       .then(data => {
         if (data.resultado) {
@@ -76,7 +76,7 @@ const Usuarios = () => {
         formUpdateUsu.append('tipo', 'Clien');
         formUpdateUsu.append('saldo', e.target[6].value);
         //console.log(formUpdateVehiculo.get('clave'));
-        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/usuarios/update_usuario',
+        fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/usuarios/update_usuario',
         {
           method: 'POST',
           body: formUpdateUsu
@@ -97,7 +97,7 @@ const Usuarios = () => {
     //console.log(e);
     /*console.log(e.target[3].checked);
     console.log(e.target[4].checked);*/
-    if(e.target[0].value==='' || e.target[1].value==='' || e.target[2].value==='' || e.target[3].value==='' || e.target[4].value==='' || e.target[5].value==='' )
+    if(e.target[0].value==='' || e.target[1].value==='' || e.target[2].value==='' || e.target[3].value==='' || e.target[4].value==='' )
     {
       toast.error('Debes de llenar todos los datos');
       return;
@@ -114,7 +114,7 @@ const Usuarios = () => {
         console.log(formAgregarUsu.saldo);
         //console.log(formUpdateVehiculo.get('clave'));
         
-        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/usuarios/insert_usuario',
+        fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/usuarios/insert_usuario',
         {
           method: 'POST',
           body: formAgregarUsu
@@ -135,7 +135,7 @@ const Usuarios = () => {
     const formDeleteUsu = new FormData();
         formDeleteUsu.append('clave', clave);
         //console.log(formUpdateVehiculo.get('clave'));
-        fetch('http://localhost/5toCuatrimestre/Repositorio-Integradora/BACK/usuarios/delete_usuario',
+        fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/usuarios/delete_usuario',
         {
           method: 'POST',
           body: formDeleteUsu
