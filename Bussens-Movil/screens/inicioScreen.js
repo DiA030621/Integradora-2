@@ -32,49 +32,6 @@ const InicioScreen = ({ navigation }) => {
     });
   }, []);
 
-  //Sign in with Google
-  const[userInfo, setUserInfo] = React.useState(null);
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: "486206247887-5lcvjpgmdlr86atvabishc7q8h5d3180.apps.googleusercontent.com"
-  });
-
-  React.useEffect(() => {
-    handleSignInWithGoogle();
-  }, [response]);
-
-  async function handleSignInWithGoogle() {
-    const user = await getLocalUser();
-    if(!user){
-      if(response?.type === "success") {
-        getUserInfo(response.authentication.accessToken);
-      }
-    }
-    else {
-      setUserInfo(user);
-    }
-  }
-
-  const getLocalUser = async () => {
-    const data = await AsyncStorage.getItem("@user");
-    if (!data) return null;
-    return JSON.parse(data);
-  }
-
-  const getUserInfo = async (token) => {
-    if(!token) return;
-    try {
-      const response = await fetch(
-        "https://www.googleapis.com/userinfo/v2/me",
-        {
-          headers : { Authorization: `Bearer ${token}` },
-        }
-      );
-      const user = await response.json();
-      await AsyncStorage.setItem("@user", JSON.stringify(user));
-      setUserInfo(user);
-    } catch(e) {console.log(e)}
-  };
-
   return (
     <View style={styles.container}>
       <Animated.Image
