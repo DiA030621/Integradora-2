@@ -8,8 +8,10 @@ import FormRuta from '../Componentes/componentes-vehiculos/FormRuta';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaPlusCircle } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 const Rutas = () => {
+  const navigate = useNavigate();
   const [vehiculos, setVehiculos] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -212,6 +214,12 @@ const Rutas = () => {
   {
     toast.error('Debes seleccionar una ruta');
   }
+
+  const grafica = (clave) =>
+  {
+    navigate('/graficas?clave='+clave );
+  }
+
   return (
     <Container>
         <Titulo
@@ -227,6 +235,7 @@ const Rutas = () => {
             onEdit={Edit}
             onDelete={Delete}
             onRuta={Ruta}
+            onGrafica={grafica}
          />
          
       ))}

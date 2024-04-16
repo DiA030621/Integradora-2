@@ -1,101 +1,176 @@
 import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { collection, query, orderBy, limit, getDocs, onSnapshot } from 'firebase/firestore';
+import { collection, query, orderBy, limit, getDocs, where } from 'firebase/firestore';
 import { db } from "../firebase/Confi";
+import accessibility from 'highcharts/modules/accessibility';
+import { getDistance } from 'geolib';
+import { useLocation } from 'react-router-dom';
 
+accessibility(Highcharts);
 function Graficas () 
 {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const clave = parseInt(searchParams.get('clave'), 10);
+
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [distance, setDistance] = useState([]);
+    const fetchDocuments = async () => {
+      const collectionRef = collection(db, 'Lecturas-2');
+      const orderedQuery = query(collectionRef, where('clave_vehiculo', '==', clave), orderBy('tiempo'));
+  
+      const snapshot = await getDocs(orderedQuery);
+      const documents = snapshot.docs.map((doc) => doc.data());
+  
+      const filteredDocuments = [documents[0]]; // Agregar el primer documento más reciente
+  
+      for (let i = 1; i < documents.length; i++) {
+        const currentDocument = documents[i];
+        const previousDocument = filteredDocuments[filteredDocuments.length - 1];
+  
+        const currentTimestamp = currentDocument.tiempo.toDate();
+        const previousTimestamp = previousDocument.tiempo.toDate();
+  
+        const diffInMinutes = Math.abs(currentTimestamp - previousTimestamp) / (1000 * 60);
+  
+        if (diffInMinutes >= 5) {
+          filteredDocuments.push(currentDocument);
+        }
+  
+        if (filteredDocuments.length === 5) {
+          break; // Se han obtenido los 5 documentos necesarios
+        }
+      }
+  
+      setData(filteredDocuments);
+      setLoading(false);
+    };
+  
+    useEffect(() => {
+      fetchDocuments();
+    }, [clave]);
+  
+    useEffect(() => {
+      if (!loading) {
+        const distances = calculateDistances(data);
+        setDistance(distances);
+        //console.log(distance);
+      }
+    }, [data, loading]);
+  
+    const calculateDistances = (data) => {
+      const distances = [];
+  
+      for (let i = 0; i < data.length - 1; i++) {
+        const point1 = { latitude: data[i].coordenadas._lat, longitude: data[i].coordenadas._long };
+        const point2 = { latitude: data[i + 1].coordenadas._lat, longitude: data[i + 1].coordenadas._long };
+  
+        const distance = getDistance(point1, point2);
+        distances.push(distance);
+      }
+  
+      return distances;
+    };
+  
+    if (loading) {
+      console.log('cargando');
+    }else{
+      console.log(distance);
+    }
+
+    
+/*
+    const fetchDocuments = async () => {
+      const collectionRef = collection(db, 'Lecturas-2');
+      const orderedQuery = query(collectionRef, where('clave_vehiculo', '==', 3), orderBy('tiempo'));
+    
+      const snapshot = await getDocs(orderedQuery);
+      const documents = snapshot.docs.map((doc) => doc.data());
+    
+      const filteredDocuments = [documents[0]]; // Agregar el primer documento más reciente
+    
+      for (let i = 1; i < documents.length; i++) {
+        const currentDocument = documents[i];
+        const previousDocument = filteredDocuments[filteredDocuments.length - 1];
+    
+        const currentTimestamp = currentDocument.tiempo.toDate();
+        const previousTimestamp = previousDocument.tiempo.toDate();
+    
+        const diffInMinutes = Math.abs(currentTimestamp - previousTimestamp) / (1000 * 60);
+    
+        if (diffInMinutes >= 5) {
+          filteredDocuments.push(currentDocument);
+        }
+    
+        if (filteredDocuments.length === 5) {
+          break; // Se han obtenido los 5 documentos necesarios
+        }
+      }
+    
+      setData(filteredDocuments);
+      setLoading(false);
+    };
 
     useEffect(() => {
-        const collectionRef = collection(db, 'Lecturas');
-        const orderedQuery = query(collectionRef, orderBy('Tiempo', 'desc'), limit(5));
-    
-        const unsubscribe = onSnapshot(orderedQuery, (snapshot) => {
-          const fetchedData = snapshot.docs.map((doc) => doc.data());
-          setData((prevData) => prevData.concat(fetchedData));
-        });
-    
-        getDocs(orderedQuery)
-          .then((querySnapshot) => {
-            const fetchedData = querySnapshot.docs.map((doc) => doc.data());
-            setData((prevData) => prevData.concat(fetchedData));
-          })
-          .catch((error) => {
-            console.log('Error al obtener los documentos:', error);
-          });
-    
-        return () => unsubscribe();
-      }, []);
+      fetchDocuments();
+    }, []);
+    const calculateDistances = (data) => {
+      const distances = [];
+      
+      for (let i = 0; i < data.length - 1; i++) {
+        const point1 = { latitude: data[i].coordenadas._lat, longitude: data[i].coordenadas._long };
+        const point2 = { latitude: data[i + 1].coordenadas._lat, longitude: data[i + 1].coordenadas._long };
+        
+        const distance = getDistance(point1, point2);
+        distances.push(distance);
+      }
+      
+      return distances;
+    };
 
-    /*useEffect(() => {
-        const consulta = query(
-          collection(db, 'Lecturas'),
-          orderBy('Tiempo', 'desc'), // Ordena por el campo 'Tiempo' de forma descendente
-          limit(5) // Limita la cantidad de documentos devueltos a 5
-        );
-      
-        getDocs(consulta)
-          .then((querySnapshot) => {
-            const newData = []; // Nuevo arreglo para almacenar los datos
-      
-            querySnapshot.forEach((doc) => {
-              const docData = doc.data();
-              newData.push(docData); // Agregar los datos al nuevo arreglo
-              //console.log(newData)
-            });
-      
-            setData((prevData) => prevData.concat(newData)); // Fusionar los nuevos datos con los existentes en el estado
-          })
-          .catch((error) => {
-            console.log('Error al obtener los documentos:', error);
-          });
-      }, []);*/
+    if(loading){
+      console.log('cargando');
+    }else{
+      const distances = calculateDistances(data);
+      setDistance(distances);
+      console.log(distances);
+    }*/
 
-      console.log(data);
+    
 
       const getOptions = () => {
-        const processedData = data.map((item) => {
-          const timestamp = item.Tiempo.seconds * 1000 + item.Tiempo.nanoseconds / 1000000;
-          const latitude = parseFloat(item.latitude);
-          const longitude = parseFloat(item.longitude);
-          return { x: timestamp, y: latitude, longitude };
+        const processedData = distance.map((dist, index) => {
+          return { x: (index + 1) * 5, y: dist }; // 'x' es el tiempo en minutos, que aumenta en 5 en cada iteración
         });
     
         return {
           chart: {
-            type: 'area',
+            type: 'area', // Cambia 'area' a 'line' para una gráfica de línea
           },
           title: {
-            text: 'Datos de latitud y longitud a lo largo del tiempo',
+            text: 'Distancia cada 5 minutos',
           },
           xAxis: {
-            type: 'datetime',
             title: {
-              text: 'Tiempo',
+              text: 'Tiempo (minutos)', // Cambia 'Tiempo' a 'Tiempo (minutos)'
             },
+            tickInterval: 5, // Intervalos de 5 minutos
           },
           yAxis: {
             title: {
-              text: 'Coordenadas',
+              text: 'Distancia', // Cambia 'Coordenadas' a 'Distancia'
             },
-            min: 20.5, // Valor mínimo del eje y
-            max: 22, // Valor máximo del eje y
+            min: 0, // Cambia a tu valor mínimo de distancia
+            max: 10000, // Cambia a tu valor máximo de distancia
           },
           series: [
             {
-              name: 'Latitud',
+              name: 'Distancia',
               data: processedData,
               marker: {
                 symbol: 'circle',
-              },
-            },
-            {
-              name: 'Longitud',
-              data: processedData,
-              marker: {
-                symbol: 'diamond',
               },
             },
           ],
@@ -108,34 +183,5 @@ function Graficas ()
         </div>
       );
     };
-/*    
-
-      const getOptions = (data) => {
-        const processedData = data.map((item) => {
-          const timestamp = item.Tiempo.toDate().getTime();
-          const latitude = item.latitude;
-          return [timestamp, latitude];
-        });
-      
-        return {
-          // Resto de las opciones del gráfico
-          series: [
-            {
-              type: 'area',
-              name: 'Monitoreo de Rutas',
-              data: processedData,
-            },
-          ],
-        };
-      };
-
-
-    return (
-        <div>
-          <HighchartsReact highcharts={Highcharts} options={getOptions(data)} />
-        </div>
-      );
-}*/
-
 
 export default Graficas;
