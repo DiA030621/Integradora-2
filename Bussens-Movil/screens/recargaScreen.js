@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 const MainScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.message}>Recarga</Text>
+      <Text style={styles.message}>Descarga la nueva app para pagar desde tu celular!</Text>
     </View>
   );
 };
