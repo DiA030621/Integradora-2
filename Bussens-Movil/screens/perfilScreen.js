@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 const PerfilScreen = () => {
   const route = useRoute();
   const { clave } = route.params;
   const [userData, setUserData] = useState(null);
+  const [registroMensaje, setRegistroMensaje] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -19,6 +20,7 @@ const PerfilScreen = () => {
         const data = await response.json();
         if (data.usuarios && data.usuarios.length > 0) {
           setUserData(data.usuarios[0]); // asumiendo que el endpoint devuelve un solo usuario
+          fetchRegistro(data.usuarios[0].clave);
         } else {
           console.error('Error fetching user data: No user data found');
         }
@@ -26,13 +28,47 @@ const PerfilScreen = () => {
         console.error('Error fetching user data:', error);
       }
     };
-  
+
     fetchUserData();
   }, [clave]);
+
+  useEffect(() => {
+    if (userData) {
+      console.log('clave: ' + userData.clave_usuario)
+      fetchRegistro(userData.clave_usuario);
+    }
+  }, [userData]);
+
+  const fetchRegistro = async (claveUsuario) => {
+    try {
+      const formData = new FormData();
+      formData.append('clave', claveUsuario);
+      console.log(claveUsuario);
+      const response = await fetch('http://dtai.uteq.edu.mx/~diemar209/Integradora2/BACK/Usuarios/get_registro_usuario', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await response.json();
+      if (data.resultado) {
+        const registro = data.registro[0];
+        const mensaje = `Usuario ${claveUsuario} registrado con éxito el día ${registro.fecha_registro}`;
+        setRegistroMensaje(mensaje);
+      } else {
+        //console.error('Error fetching registro data:', data.mensaje);
+      }
+    } catch (error) {
+      console.error('Error fetching registro data:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Información del Usuario</Text>
+      {registroMensaje && (
+        <View style={styles.messageContainer}>
+          <Text style={styles.message}>{registroMensaje}</Text>
+        </View>
+      )}
       <View style={styles.form}>
         <View style={styles.formField}>
           <Text style={styles.label}>Nombre:</Text>
@@ -105,6 +141,17 @@ const styles = StyleSheet.create({
     color: '#11111f',
     borderWidth: 1,
     borderColor: '#f2cd00',
+  },
+  messageContainer: {
+    backgroundColor: '#f2cd00',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  message: {
+    fontSize: 16,
+    color: '#11111f',
+    fontWeight: 'bold',
   },
 });
 
