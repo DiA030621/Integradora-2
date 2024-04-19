@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
 import { useRoute } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 const FrecuenteScreen = () => {
   const route = useRoute();
@@ -10,8 +11,9 @@ const FrecuenteScreen = () => {
   const [data, setData] = useState([]);
   const [hasData, setHasData] = useState(true); // Estado para indicar si hay datos
 
-  useEffect(() => {
-    // Función para obtener los datos de la API
+
+useFocusEffect(
+  React.useCallback(() => {
     const fetchData = async (clave) => {
       try {
         console.log('Clave de usuario:', clave);
@@ -29,29 +31,26 @@ const FrecuenteScreen = () => {
         return null;
       }
     };
-    
-    
-    // Llamar a la función fetchData para obtener los datos
+
     fetchData(clave)
       .then((response) => {
         if (response) {
           const customColors = ['#F2CD00', '#FBF2BC', '#11111F', '#9898BD', '#00B3E6', '#AEDFEE', '#3366E6', '#B1B166', '#99FF99', '#B34D4D'];
-          // Procesar los datos recibidos para adaptarlos al formato requerido por el gráfico de pastel
-          // Los datos deben ser un array de objetos con las propiedades "name" y "population" o similar
           const chartData = response.map((item, index) => ({
             name: 'Ruta: ' + item.nombre,
-            population: parseInt(item.cantidad), // Asegúrate de convertir la cantidad a número
-            color: customColors[index % customColors.length], //Asigna un color personalizado a cada segmento de la gráfica
+            population: parseInt(item.cantidad),
+            color: customColors[index % customColors.length],
           }));
           setData(chartData);
         } else {
-          setHasData(false); // Establecer el estado hasData como false si no hay datos
+          setHasData(false);
         }
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
-      });    
-  }, []);
+      });
+  }, [clave])
+);
   
 
   return (
